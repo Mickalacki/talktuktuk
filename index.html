@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="description" content="Learn Khmer through real Cambodian songs, kids songs and comedy clips!">
+<meta name="theme-color" content="#FFD600">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Talk Tuk Tuk">
+<title>Talk Tuk Tuk — Learn Khmer Through Song</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --yellow: #FFD600;
+  --red: #D32F2F;
+  --blue: #1565C0;
+  --pink: #FF1493;
+  --green: #2E7D32;
+  --purple: #6A1B9A;
+  --dark: #1a1a2e;
+  --muted: #555555;
+}
+html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+.app { max-width: 480px; margin: 0 auto; padding-bottom: 48px; }
+
+/* HEADER */
+.header { background: var(--yellow); padding: 18px 20px 14px; display: flex; align-items: center; gap: 12px; position: relative; }
+.header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--red), var(--pink), var(--blue), var(--red)); }
+.header-title { font-family: 'Fredoka One', cursive; font-size: 28px; color: var(--dark); line-height: 1; letter-spacing: 1px; }
+.header-sub { font-size: 11px; color: #444; font-weight: 700; margin-top: 3px; text-transform: uppercase; letter-spacing: 1.5px; }
+.mic-icon { width: 46px; height: 46px; background: var(--blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+
+/* CHARITY BANNER */
+.charity-banner { background: var(--red); padding: 8px 16px; text-align: center; font-size: 11px; font-weight: 700; color: white; letter-spacing: 0.5px; }
+.charity-banner a { color: var(--yellow); text-decoration: none; }
+
+/* MAIN NAV */
+.main-nav { display: flex; margin: 14px 12px 0; gap: 6px; }
+.main-tab { flex: 1; background: rgba(255,255,255,0.08); border: none; border-radius: 10px; padding: 10px 4px; color: rgba(255,255,255,0.55); font-family: 'Nunito', sans-serif; font-size: 11px; font-weight: 700; cursor: pointer; transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.5px; line-height: 1.3; }
+.main-tab.active { color: var(--dark); }
+.main-tab.t-khmer.active { background: var(--yellow); }
+.main-tab.t-kids.active { background: #69F0AE; }
+.main-tab.t-comedy.active { background: #FF80AB; }
+.main-tab.t-about.active { background: #80D8FF; }
+
+/* SECTION PANELS */
+.panel { display: none; }
+.panel.visible { display: block; }
+
+/* SONG LIST */
+.song-list { margin: 12px 12px 0; display: flex; flex-direction: column; gap: 10px; }
+.song-item { background: white; border-radius: 14px; overflow: hidden; box-shadow: 0 3px 16px rgba(0,0,0,0.3); cursor: pointer; transition: transform 0.15s; }
+.song-item:active { transform: scale(0.98); }
+.song-item-header { display: flex; align-items: center; gap: 10px; padding: 14px 16px; }
+.song-badge { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Fredoka One', cursive; font-size: 16px; color: var(--dark); flex-shrink: 0; }
+.badge-khmer { background: var(--yellow); }
+.badge-kids { background: #69F0AE; }
+.badge-comedy { background: #FF80AB; }
+.song-info-title { font-family: 'Fredoka One', cursive; font-size: 16px; color: var(--dark); line-height: 1.2; }
+.song-info-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.song-arrow { margin-left: auto; font-size: 18px; color: #ccc; }
+
+/* PLAYER */
+.player-wrap { margin: 12px 12px 0; background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.35); display: none; }
+.player-wrap.visible { display: block; }
+.player-header { padding: 14px 18px; display: flex; align-items: center; gap: 10px; }
+.player-header.khmer { background: var(--blue); }
+.player-header.kids { background: var(--green); }
+.player-header.comedy { background: var(--purple); }
+.player-back { background: rgba(255,255,255,0.2); border: none; color: white; border-radius: 20px; padding: 6px 12px; font-size: 12px; font-weight: 700; cursor: pointer; flex-shrink: 0; }
+.player-title { font-family: 'Fredoka One', cursive; font-size: 17px; color: white; line-height: 1.2; }
+.player-artist { font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 2px; }
+.video-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; }
+.video-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+.progress-bar-wrap { height: 5px; background: #eee; }
+.progress-bar { height: 100%; width: 0%; transition: width 0.5s linear; }
+.pb-khmer { background: linear-gradient(90deg, var(--blue), var(--pink)); }
+.pb-kids { background: linear-gradient(90deg, var(--green), #69F0AE); }
+.pb-comedy { background: linear-gradient(90deg, var(--purple), #FF80AB); }
+.controls { padding: 14px 18px 12px; display: flex; gap: 10px; align-items: center; }
+.btn-sing { flex: 1; color: white; border: none; border-radius: 30px; padding: 13px 20px; font-family: 'Fredoka One', cursive; font-size: 18px; cursor: pointer; letter-spacing: 1px; transition: transform 0.15s; -webkit-tap-highlight-color: transparent; }
+.btn-sing.khmer { background: var(--pink); }
+.btn-sing.kids { background: var(--green); }
+.btn-sing.comedy { background: var(--purple); }
+.btn-sing:active { transform: scale(0.97); }
+.btn-sing.playing { background: var(--red) !important; }
+.btn-reset { background: #f0f0f0; color: var(--dark); border: none; border-radius: 30px; padding: 13px 18px; font-size: 16px; font-weight: 700; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.lyrics-section { padding: 14px 18px 20px; }
+.lyrics-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); margin-bottom: 10px; }
+.lyric-line { padding: 10px 14px; border-radius: 10px; margin-bottom: 6px; transition: background 0.3s, transform 0.2s; }
+.lyric-line .english { font-size: 15px; font-weight: 700; color: var(--dark); line-height: 1.4; }
+.lyric-line .meaning { font-size: 12px; color: var(--muted); margin-top: 3px; font-style: italic; }
+.lyric-line.active { background: var(--yellow); transform: scale(1.02); }
+.lyric-line.active .english { color: var(--dark); }
+.lyric-line.sung { opacity: 0.4; }
+
+/* COMING SOON */
+.coming-soon-card { margin: 12px 12px 0; background: white; border-radius: 16px; padding: 28px 18px; box-shadow: 0 4px 24px rgba(0,0,0,0.35); text-align: center; }
+.coming-soon-card .big { font-size: 52px; line-height: 1; margin-bottom: 12px; }
+.coming-soon-card h2 { font-family: 'Fredoka One', cursive; font-size: 22px; color: var(--purple); margin-bottom: 8px; }
+.coming-soon-card p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+/* ABOUT */
+.about-card { margin: 12px 12px 0; background: white; border-radius: 16px; padding: 22px 18px; box-shadow: 0 4px 24px rgba(0,0,0,0.35); }
+.about-title { font-family: 'Fredoka One', cursive; font-size: 24px; color: var(--blue); margin-bottom: 10px; }
+.about-text { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 12px; }
+.giving-badge { background: var(--red); color: white; border-radius: 12px; padding: 14px 16px; text-align: center; font-weight: 700; font-size: 14px; margin-bottom: 18px; }
+.giving-badge .pct { color: var(--yellow); font-size: 36px; font-family: 'Fredoka One', cursive; display: block; line-height: 1.1; }
+.section-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); margin-bottom: 10px; }
+.charity-list { list-style: none; }
+.charity-list li { padding: 12px 14px; border-left: 4px solid var(--yellow); background: #fffde7; border-radius: 0 10px 10px 0; margin-bottom: 8px; }
+.charity-list li strong { color: var(--dark); display: block; font-size: 14px; margin-bottom: 3px; }
+.charity-list li p { font-size: 12px; color: var(--muted); line-height: 1.5; margin-bottom: 4px; }
+.charity-list li a { color: var(--blue); font-size: 12px; font-weight: 700; text-decoration: none; }
+
+.donate-wrap { margin: 16px 12px 0; text-align: center; }
+.btn-donate { display: inline-block; background: var(--yellow); color: var(--dark); font-family: "Fredoka One", cursive; font-size: 18px; padding: 14px 32px; border-radius: 30px; text-decoration: none; letter-spacing: 1px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: transform 0.15s; }
+.btn-donate:active { transform: scale(0.97); }
+.donate-note { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 8px; }
+.footer { text-align: center; margin-top: 28px; font-size: 11px; color: rgba(255,255,255,0.3); }
+</style>
+<script src="https://www.youtube.com/iframe_api"></script>
+</head>
+<body>
+<div class="app">
+
+  <div class="header">
+    <div class="mic-icon">🎤</div>
+    <div>
+      <div class="header-title">TALK TUK TUK</div>
+      <div class="header-sub">Learn Khmer Through Song</div>
+    </div>
+  </div>
+
+  <div class="charity-banner">
+    20% of profits support Cambodian charities &mdash;
+    <a href="#" onclick="showMain('about'); return false;">Find out more</a>
+  </div>
+
+  <div class="donate-wrap">
+    <a class="btn-donate" href="PAYPAL_LINK_HERE" target="_blank">❤️ Donate</a>
+    <div class="donate-note">20% of all donations go directly to Cambodian charities</div>
+  </div>
+
+  <div class="main-nav">
+    <button class="main-tab t-khmer active" id="mtab-khmer" onclick="showMain('khmer')">🎵<br>Khmer Songs</button>
+    <button class="main-tab t-kids" id="mtab-kids" onclick="showMain('kids')">👶<br>Kids Songs</button>
+    <button class="main-tab t-comedy" id="mtab-comedy" onclick="showMain('comedy')">😂<br>Comedy</button>
+    <button class="main-tab t-about" id="mtab-about" onclick="showMain('about')">❤️<br>About</button>
+  </div>
+
+  <!-- KHMER SONGS -->
+  <div class="panel visible" id="panel-khmer">
+    <div class="song-list" id="khmer-list">
+      <div class="song-item" onclick="openPlayer('khmer', 0)">
+        <div class="song-item-header">
+          <div class="song-badge badge-khmer">1</div>
+          <div>
+            <div class="song-info-title">Heang — ហែង</div>
+            <div class="song-info-sub">Traditional Cambodian Song</div>
+          </div>
+          <div class="song-arrow">▶</div>
+        </div>
+      </div>
+    </div>
+    <div class="player-wrap" id="khmer-player">
+      <div class="player-header khmer">
+        <button class="player-back" onclick="goToList('khmer')">← Songs</button><button class="player-back" onclick="closePlayer('khmer')" style="margin-left:6px;">↺ Restart</button>
+        <div>
+          <div class="player-title" id="khmer-player-title"></div>
+          <div class="player-artist" id="khmer-player-artist"></div>
+        </div>
+      </div>
+      <div class="video-wrap"><iframe id="khmer-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+      <div class="progress-bar-wrap"><div class="progress-bar pb-khmer" id="khmer-progress"></div></div>
+      <div class="controls">
+        <button class="btn-sing khmer" id="khmer-btn" onclick="toggleSing('khmer')">▶ Sing Along!</button>
+        <button class="btn-reset" onclick="resetSing('khmer')">↺</button>
+      </div>
+      <div class="lyrics-section">
+        <div class="lyrics-label">Lyrics &amp; Meaning</div>
+        <div id="khmer-lyrics"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KIDS SONGS -->
+  <div class="panel" id="panel-kids">
+    <div class="song-list" id="kids-list">
+      <div class="song-item" onclick="openPlayer('kids', 0)">
+        <div class="song-item-header">
+          <div class="song-badge badge-kids">1</div>
+          <div>
+            <div class="song-info-title">Twinkle Twinkle Little Star</div>
+            <div class="song-info-sub">ពន្លឺផ្កាយតូច · Beginner</div>
+          </div>
+          <div class="song-arrow">▶</div>
+        </div>
+      </div>
+      <div class="song-item" onclick="openPlayer('kids', 1)">
+        <div class="song-item-header">
+          <div class="song-badge badge-kids">2</div>
+          <div>
+            <div class="song-info-title">My Grandpa's Farm</div>
+            <div class="song-info-sub">Khmer Old MacDonald · Beginner</div>
+          </div>
+          <div class="song-arrow">▶</div>
+        </div>
+      </div>
+      <div class="song-item" onclick="openPlayer('kids', 2)">
+        <div class="song-item-header">
+          <div class="song-badge badge-kids">3</div>
+          <div>
+            <div class="song-info-title">If You're Happy and You Know It</div>
+            <div class="song-info-sub">ពេលសប្បាយ · Beginner</div>
+          </div>
+          <div class="song-arrow">▶</div>
+        </div>
+      </div>
+    </div>
+    <div class="player-wrap" id="kids-player">
+      <div class="player-header kids">
+        <button class="player-back" onclick="goToList('kids')">← Songs</button><button class="player-back" onclick="closePlayer('kids')" style="margin-left:6px;">↺ Restart</button>
+        <div>
+          <div class="player-title" id="kids-player-title"></div>
+          <div class="player-artist" id="kids-player-artist"></div>
+        </div>
+      </div>
+      <div class="video-wrap" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;"><div id="kids-yt-player" style="position:absolute;top:0;left:0;width:100%;height:100%;"></div></div>
+      <div class="progress-bar-wrap"><div class="progress-bar pb-kids" id="kids-progress"></div></div>
+      <div class="controls">
+        <button class="btn-sing kids" id="kids-btn" onclick="toggleSingKids()">▶ Sing Along!</button>
+        <button class="btn-reset" onclick="resetSing('kids')">↺</button>
+      </div>
+      <div class="lyrics-section">
+        <div class="lyrics-label">Lyrics &amp; Meaning</div>
+        <div id="kids-lyrics"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMEDY -->
+  <div class="panel" id="panel-comedy">
+    <div class="coming-soon-card">
+      <div class="big">😂</div>
+      <h2>Comedy Clips Coming Soon!</h2>
+      <p>Short clips from real Cambodian comedy shows — with translations. Learn the phrases locals actually use every day, including the ones your guidebook definitely left out!</p>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="panel" id="panel-about">
+    <div class="about-card">
+      <div class="about-title">About Talk Tuk Tuk</div>
+      <p class="about-text">Whether you're here for a week or you've made Cambodia home — Talk Tuk Tuk helps you connect with the people around you. Learn real Khmer through music, laughter and song. No boring lessons. No textbooks. Just Cambodia.</p>
+      <p class="about-text">Sing along to a classic Cambodian ballad, laugh at a comedy clip, or start simple with a kids song. Whatever your level, there's something here for you — tourist, expat, or anyone who loves this country.</p>
+      <div class="giving-badge">
+        <span class="pct">20%</span>
+        of every purchase goes directly to Cambodian charities
+      </div>
+      <div class="donate-wrap" style="margin: 0 0 18px;">
+        <a class="btn-donate" href="PAYPAL_LINK_HERE" target="_blank">❤️ Donate Now</a>
+        <div class="donate-note" style="color:#888;">Every dollar helps Cambodian children and families</div>
+      </div>
+      <div class="section-label">Our Charity Partners</div>
+      <ul class="charity-list">
+        <li>
+          <strong>Kantha Bopha Children's Hospitals</strong>
+          <p>Providing free healthcare to children across Cambodia. Founded by the late Dr Beat Richner, treating thousands of children every year regardless of ability to pay.</p>
+          <a href="https://www.beat-richner.ch" target="_blank">beat-richner.ch ↗</a>
+        </li>
+        <li>
+          <strong>Caritas Cambodia</strong>
+          <p>Supporting displaced families and vulnerable communities across 12 Cambodian provinces, with work in emergency relief, anti-trafficking, and poverty reduction.</p>
+          <a href="https://www.caritascambodia.org" target="_blank">caritascambodia.org ↗</a>
+        </li>
+        <li>
+          <strong>Sunshine School Cambodia</strong>
+          <p>Founded by Han, a university student who started teaching 6 children under her mother's house. She now provides free English lessons and a daily meal to over 150 children in Siem Reap.</p>
+          <a href="https://www.facebook.com/SunshineSchoolCambodia" target="_blank">facebook.com/SunshineSchoolCambodia ↗</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">&copy; 2025 Talk Tuk Tuk &nbsp;|&nbsp; Made with ❤️ in Siem Reap, Cambodia</div>
+
+</div>
+
+<script>
+var songs = {
+  khmer: [
+    {
+      title: "Heang — ហែង",
+      artist: "Traditional Cambodian Song",
+      ytid: "OAXimBfuVOw",
+      lyrics: [
+        { english: "Oh my darling, where are you going?", meaning: "A classic opening of longing" },
+        { english: "The river flows but you don't return", meaning: "Images of nature reflect the heart" },
+        { english: "I wait by the lotus pond each evening", meaning: "Lotus — Cambodia's sacred flower" },
+        { english: "Your laughter still echoes in these fields", meaning: "Memory lives in the landscape" },
+        { english: "Heang, Heang — I call your name softly", meaning: "\"Heang\" means to float or drift" },
+        { english: "The moonlight keeps me company tonight", meaning: "The moon is a witness to love" },
+        { english: "Come back to me before the rains return", meaning: "Rainy season marks the passing year" },
+        { english: "My heart is a boat without a paddle", meaning: "A common Khmer metaphor for loss" },
+        { english: "Heang, Heang — the stars remember you", meaning: "Stars carry messages in Khmer folklore" },
+        { english: "One day the river will bring you home", meaning: "Rivers connect people across Cambodia" }
+      ]
+    }
+  ],
+  kids: [
+    {
+      title: "Twinkle Twinkle Little Star",
+      artist: "ពន្លឺផ្កាយតូច · Khmer Version",
+      ytid: "QbHP9Bf_aeA",
+      ytstart: 0,
+      lyrics: [
+        { english: "Twinkle twinkle little star", meaning: "ផ្កាយ = Pkay · Star", t: 0 },
+        { english: "How I wonder what you are", meaning: "មេឃ = Mek · Sky", t: 6 },
+        { english: "Up above the world so high", meaning: "ខ្ពស់ = Kpoh · High", t: 11 },
+        { english: "Like a diamond in the sky", meaning: "ពេជ្រ = Pech · Diamond", t: 16 },
+        { english: "Twinkle twinkle little star", meaning: "ពន្លឺ = Ponleu · Light/Twinkle", t: 22 },
+        { english: "How I wonder what you are", meaning: "តូច = Toch · Small/Little", t: 26 }
+      ]
+    },
+    {
+      title: "My Grandpa's Farm",
+      artist: "Khmer Version of Old MacDonald",
+      ytid: "5SRX8UrREJY",
+      ytstart: 0,
+      lyrics: [
+        { english: "My grandpa has a house by the rice field", meaning: "ជីតា = Chida · Grandpa", t: 0 },
+        { english: "By the rice field he raises chickens", meaning: "មាន់ = Moan · Chicken", t: 7 },
+        { english: "With a cluck-cluck here and a cluck-cluck there", meaning: "ក្អек = Kawk · Cluck", t: 13 },
+        { english: "Here a cluck, there a cluck", meaning: "ទីនេះ = Ti nih · Here", t: 17 },
+        { english: "Everywhere a cluck-cluck", meaning: "គ្រប់ = Krop · Every", t: 20 },
+        { english: "My grandpa has a house by the rice field", meaning: "ស្រែ = Srae · Rice field", t: 22 },
+        { english: "By the rice field he raises ducks", meaning: "ទា = Tea · Duck", t: 29 },
+        { english: "With a quack-quack here and a quack-quack there", meaning: "កាប = Kap · Quack", t: 36 },
+        { english: "Here a quack, there a quack", meaning: "ទីនោះ = Ti nuh · There", t: 39 },
+        { english: "Everywhere a quack-quack", meaning: "ទីកន្លែង = Ti konlaeng · Place", t: 42 },
+        { english: "My grandpa has a house by the rice field", meaning: "ផ្ទះ = Pteah · House", t: 44 },
+        { english: "By the rice field he raises cows", meaning: "គោ = Ko · Cow", t: 51 },
+        { english: "With a moo-moo here and a moo-moo there", meaning: "មូ = Moo · Cow sound", t: 58 },
+        { english: "Here a moo, there a moo", meaning: "ទីនេះ = Ti nih · Here", t: 62 },
+        { english: "Everywhere a moo-moo", meaning: "គ្រប់ = Krop · Every", t: 64 },
+        { english: "My grandpa has a house by the rice field", meaning: "ជីតា = Chida · Grandpa", t: 67 }
+      ]
+    },
+    {
+      title: "If You're Happy and You Know It",
+      artist: "ពេលសប្បាយ · Khmer Version",
+      ytid: "rWgcFID7XOA",
+      lyrics: [
+        { english: "If you're happy and you know it", meaning: "បើអ្នកសប្បាយ ហើយដឹងខ្លួន" },
+        { english: "Clap your hands!", meaning: "拍 ដៃ! (Dak dai) · Clap!" },
+        { english: "If you're happy and you know it", meaning: "បើអ្នកសប្បាយ ហើយដឹងខ្លួន" },
+        { english: "Clap your hands!", meaning: "ដៃ = Dai · Hands" },
+        { english: "If you're happy and you know it", meaning: "សប្បាយ = Sabay · Happy" },
+        { english: "Then your face will surely show it", meaning: "មុខ = Mok · Face" },
+        { english: "If you're happy and you know it", meaning: "បើអ្នកសប្បាយ ហើយដឹងខ្លួន" },
+        { english: "Clap your hands!", meaning: "ដៃ ដៃ! Clap clap!" }
+      ]
+    }
+  ]
+};
+
+var state = {
+  khmer: { current: -1, playing: false, timer: null, songIndex: 0, startTime: 0 },
+  kids:  { current: -1, playing: false, timer: null, songIndex: 0, startTime: 0 }
+};
+var INTERVAL = 4200;
+
+function hasTimestamps(type, idx) {
+  return songs[type][idx].lyrics[0].t !== undefined;
+}
+
+function tickTimestamp(type) {
+  var s = state[type];
+  var elapsed = (Date.now() - s.startTime) / 1000;
+  var lyrs = songs[type][s.songIndex].lyrics;
+  var newLine = -1;
+  for (var i = 0; i < lyrs.length; i++) {
+    if (elapsed >= lyrs[i].t) newLine = i;
+  }
+  if (newLine !== s.current) {
+    s.current = newLine;
+    highlightLine(type, newLine, lyrs.length);
+  }
+  if (newLine === lyrs.length - 1 && elapsed >= lyrs[lyrs.length-1].t + 6) {
+    clearInterval(s.timer);
+    s.playing = false;
+    var btn = document.getElementById(type + '-btn');
+    btn.textContent = '▶ Sing Again!';
+    btn.classList.remove('playing');
+  }
+}
+
+function highlightLine(type, n, total) {
+  for (var i = 0; i < total; i++) {
+    var el = document.getElementById(type + '-line-' + i);
+    if (!el) continue;
+    el.classList.remove('active', 'sung');
+    if (i === n) el.classList.add('active');
+    else if (i < n) el.classList.add('sung');
+  }
+  if (n >= 0) {
+    var active = document.getElementById(type + '-line-' + n);
+    if (active) active.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+  var pct = n < 0 ? 0 : Math.round(((n + 1) / total) * 100);
+  document.getElementById(type + '-progress').style.width = pct + '%';
+}
+
+function showMain(tab) {
+  var tabs = ['khmer','kids','comedy','about'];
+  tabs.forEach(function(t) {
+    document.getElementById('panel-' + t).classList.toggle('visible', t === tab);
+    document.getElementById('mtab-' + t).classList.toggle('active', t === tab);
+  });
+}
+
+function openPlayer(type, idx) {
+  var s = songs[type][idx];
+  state[type].songIndex = idx;
+  state[type].current = -1;
+  state[type].playing = false;
+  clearInterval(state[type].timer);
+
+  document.getElementById(type + '-list').style.display = 'none';
+  var player = document.getElementById(type + '-player');
+  player.classList.add('visible');
+
+  document.getElementById(type + '-player-title').textContent = s.title;
+  document.getElementById(type + '-player-artist').textContent = s.artist;
+
+  var start = s.ytstart ? '&start=' + s.ytstart : '';
+  if (type === 'kids') {
+    if (kidsPlayer) {
+      kidsPlayer.loadVideoById({ videoId: s.ytid, startSeconds: s.ytstart || 0 });
+      kidsPlayer.pauseVideo();
+    } else {
+      pendingKidsVideo = { videoId: s.ytid, startSeconds: s.ytstart || 0 };
+    }
+  } else {
+    document.getElementById(type + '-iframe').src = 'https://www.youtube.com/embed/' + s.ytid + '?rel=0&playsinline=1' + start;
+  }
+
+  document.getElementById(type + '-progress').style.width = '0%';
+  document.getElementById(type + '-btn').textContent = '▶ Sing Along!';
+  document.getElementById(type + '-btn').classList.remove('playing');
+
+  renderLyrics(type, idx);
+}
+
+function goToList(type) {
+  clearInterval(state[type].timer);
+  state[type].playing = false;
+  state[type].current = -1;
+  state[type].startTime = 0;
+  if (type === 'kids' && kidsPlayer) kidsPlayer.stopVideo();
+  else document.getElementById(type + '-iframe').src = '';
+  document.getElementById(type + '-btn').textContent = '▶ Sing Along!';
+  document.getElementById(type + '-btn').classList.remove('playing');
+  document.getElementById(type + '-player').classList.remove('visible');
+  document.getElementById(type + '-list').style.display = 'flex';
+}
+
+function closePlayer(type) {
+  var idx = state[type].songIndex;
+  clearInterval(state[type].timer);
+  state[type].playing = false;
+  state[type].current = -1;
+  state[type].startTime = 0;
+  if (type === 'kids') {
+    if (kidsPlayer) {
+      kidsPlayer.seekTo(songs.kids[idx].ytstart || 0, true);
+      kidsPlayer.pauseVideo();
+    }
+  } else {
+    var s = songs[type][idx];
+    var start = s.ytstart ? '&start=' + s.ytstart : '';
+    document.getElementById(type + '-iframe').src = 'https://www.youtube.com/embed/' + s.ytid + '?rel=0&playsinline=1' + start;
+  }
+  document.getElementById(type + '-btn').textContent = '▶ Sing Along!';
+  document.getElementById(type + '-btn').classList.remove('playing');
+  document.getElementById(type + '-progress').style.width = '0%';
+  renderLyrics(type, idx);
+}
+
+function renderLyrics(type, idx) {
+  var container = document.getElementById(type + '-lyrics');
+  container.innerHTML = '';
+  var lyrs = songs[type][idx].lyrics;
+  lyrs.forEach(function(l, i) {
+    var div = document.createElement('div');
+    div.className = 'lyric-line';
+    div.id = type + '-line-' + i;
+    div.innerHTML = '<div class="english">' + l.english + '</div><div class="meaning">' + l.meaning + '</div>';
+    container.appendChild(div);
+  });
+}
+
+function updateLine(type, n) {
+  var lyrs = songs[type][state[type].songIndex].lyrics;
+  for (var i = 0; i < lyrs.length; i++) {
+    var el = document.getElementById(type + '-line-' + i);
+    if (!el) continue;
+    el.classList.remove('active','sung');
+    if (i === n) el.classList.add('active');
+    else if (i < n) el.classList.add('sung');
+  }
+  if (n >= 0) {
+    var a = document.getElementById(type + '-line-' + n);
+    if (a) a.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  var pct = n < 0 ? 0 : Math.round(((n + 1) / lyrs.length) * 100);
+  document.getElementById(type + '-progress').style.width = pct + '%';
+}
+
+function toggleSing(type) {
+  var btn = document.getElementById(type + '-btn');
+  var s = state[type];
+  if (!s.playing) {
+    s.playing = true;
+    btn.textContent = '⏸ Pause';
+    btn.classList.add('playing');
+    if (hasTimestamps(type, s.songIndex)) {
+      s.startTime = Date.now();
+      s.timer = setInterval(function() { tickTimestamp(type); }, 250);
+    } else {
+      advanceLine(type);
+      s.timer = setInterval(function() { advanceLine(type); }, INTERVAL);
+    }
+  } else {
+    s.playing = false;
+    btn.textContent = '▶ Sing Along!';
+    btn.classList.remove('playing');
+    clearInterval(s.timer);
+  }
+}
+
+function advanceLine(type) {
+  var s = state[type];
+  var lyrs = songs[type][s.songIndex].lyrics;
+  if (s.current < lyrs.length - 1) {
+    s.current++;
+    updateLine(type, s.current);
+  } else {
+    clearInterval(s.timer);
+    s.playing = false;
+    var btn = document.getElementById(type + '-btn');
+    btn.textContent = '▶ Sing Again!';
+    btn.classList.remove('playing');
+  }
+}
+
+function resetSing(type) {
+  var s = state[type];
+  clearInterval(s.timer);
+  s.playing = false;
+  s.current = -1;
+  s.startTime = 0;
+  updateLine(type, -1);
+  var btn = document.getElementById(type + '-btn');
+  btn.textContent = '▶ Sing Along!';
+  btn.classList.remove('playing');
+
+}
+
+
+
+function openYouTube() {
+  var btn = document.getElementById('kids-yt-btn');
+  var ytid = btn.dataset.ytid;
+  var start = btn.dataset.ytstart || 0;
+  window.open('https://www.youtube.com/watch?v=' + ytid + '&t=' + start + 's', '_blank');
+}
+
+function toggleSingKids() {
+  var type = 'kids';
+  var btn = document.getElementById(type + '-btn');
+  var s = state[type];
+  if (!s.playing) {
+    s.playing = true;
+    btn.textContent = '⏸ Pause';
+    btn.classList.add('playing');
+    if (kidsPlayer) kidsPlayer.playVideo();
+    s.startTime = Date.now();
+    if (hasTimestamps(type, s.songIndex)) {
+      s.timer = setInterval(function() { tickTimestamp(type); }, 250);
+    } else {
+      advanceLine(type);
+      s.timer = setInterval(function() { advanceLine(type); }, INTERVAL);
+    }
+  } else {
+    s.playing = false;
+    btn.textContent = '▶ Sing Along!';
+    btn.classList.remove('playing');
+    clearInterval(s.timer);
+    if (kidsPlayer) kidsPlayer.pauseVideo();
+  }
+}
+
+var kidsPlayer = null;
+var pendingKidsVideo = null;
+
+function onYouTubeIframeAPIReady() {
+  kidsPlayer = new YT.Player('kids-yt-player', {
+    height: '100%',
+    width: '100%',
+    videoId: 'QbHP9Bf_aeA',
+    playerVars: { rel: 0, playsinline: 1, modestbranding: 1 },
+    events: {
+      onReady: function() {
+        if (pendingKidsVideo) {
+          kidsPlayer.loadVideoById(pendingKidsVideo);
+          kidsPlayer.pauseVideo();
+          pendingKidsVideo = null;
+        }
+      }
+    }
+  });
+}
+</script>
+</body>
+</html>
