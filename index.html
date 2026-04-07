@@ -14,6 +14,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --lang-primary: var(--yellow); }
 :root {
   --yellow: #FFD600;
   --red: #D32F2F;
@@ -121,11 +122,38 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
 .btn-donate { display: inline-block; background: var(--yellow); color: var(--dark); font-family: "Fredoka One", cursive; font-size: 18px; padding: 14px 32px; border-radius: 30px; text-decoration: none; letter-spacing: 1px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: transform 0.15s; }
 .btn-donate:active { transform: scale(0.97); }
 .donate-note { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 8px; }
+.lang-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--dark); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.lang-box { background: white; border-radius: 20px; padding: 30px 24px; max-width: 400px; width: 100%; text-align: center; }
+.lang-box h2 { font-family: "Fredoka One", cursive; font-size: 26px; color: var(--dark); margin-bottom: 8px; }
+.lang-box p { font-size: 14px; color: var(--muted); margin-bottom: 24px; line-height: 1.5; }
+.lang-btn { display: block; width: 100%; padding: 16px; border: none; border-radius: 14px; font-family: "Fredoka One", cursive; font-size: 20px; cursor: pointer; margin-bottom: 12px; transition: transform 0.15s; }
+.lang-btn:active { transform: scale(0.97); }
+.lang-btn-khmer { background: var(--yellow); color: var(--dark); }
+.lang-btn-english { background: var(--blue); color: white; }
+.lang-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.1); border-radius: 20px; padding: 6px 14px; margin: 10px 12px 0; cursor: pointer; }
+.lang-badge span { font-size: 12px; font-weight: 700; color: white; text-transform: uppercase; letter-spacing: 1px; }
+.lang-badge .flag { font-size: 18px; }
+.lyric-line .khmer { font-size: 16px; font-weight: 700; color: var(--dark); line-height: 1.4; }
+.lyric-line .english { font-size: 15px; color: var(--muted); margin-top: 3px; }
+.lyric-line .meaning { font-size: 12px; color: #aaa; margin-top: 2px; font-style: italic; }
+.lyric-line.active .khmer { color: var(--dark); }
+.lyric-line.active .english { color: #444; }
+.lyric-line.active .meaning { color: #666; }
 .footer { text-align: center; margin-top: 28px; font-size: 11px; color: rgba(255,255,255,0.3); }
 </style>
 <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
+<div id="lang-overlay" class="lang-overlay">
+  <div class="lang-box">
+    <div style="font-size:52px;margin-bottom:12px;">🛺</div>
+    <h2>Talk Tuk Tuk</h2>
+    <p>What would you like to learn today?</p>
+    <button class="lang-btn lang-btn-khmer" onclick="setLang('khmer')">🇰🇭 I want to learn Khmer</button>
+    <button class="lang-btn lang-btn-english" onclick="setLang('english')">🇬🇧 I want to learn English</button>
+  </div>
+</div>
+
 <div class="app">
 
   <div class="header">
@@ -146,8 +174,14 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
     <div class="donate-note">20% of all donations go directly to Cambodian charities</div>
   </div>
 
+  <div class="lang-badge" onclick="document.getElementById('lang-overlay').style.display='flex'">
+    <span id="lang-flag" class="flag">🇰🇭</span>
+    <span id="lang-label">Learning Khmer</span>
+    <span style="color:rgba(255,255,255,0.5);font-size:11px;">▼</span>
+  </div>
+
   <div class="main-nav">
-    <button class="main-tab t-khmer active" id="mtab-khmer" onclick="showMain('khmer')">🎵<br>Khmer Songs</button>
+    <button class="main-tab t-khmer active" id="mtab-khmer" onclick="showMain('khmer')">🎵<br>Songs</button>
     <button class="main-tab t-kids" id="mtab-kids" onclick="showMain('kids')">👶<br>Kids Songs</button>
     <button class="main-tab t-comedy" id="mtab-comedy" onclick="showMain('comedy')">😂<br>Comedy</button>
     <button class="main-tab t-about" id="mtab-about" onclick="showMain('about')">❤️<br>About</button>
@@ -319,12 +353,12 @@ var songs = {
       ytid: "8EoFayAcxUY",
       ytstart: 0,
       lyrics: [
-        { english: "Twinkle twinkle little star", meaning: "ផ្កាយ = Pkay · Star", t: 0 },
-        { english: "How I wonder what you are", meaning: "មេឃ = Mek · Sky", t: 6 },
-        { english: "Up above the world so high", meaning: "ខ្ពស់ = Kpoh · High", t: 11 },
-        { english: "Like a diamond in the sky", meaning: "ពេជ្រ = Pech · Diamond", t: 16 },
-        { english: "Twinkle twinkle little star", meaning: "ពន្លឺ = Ponleu · Light/Twinkle", t: 22 },
-        { english: "How I wonder what you are", meaning: "តូច = Toch · Small/Little", t: 26 }
+        { khmer: "ពន្លឺ ពន្លឺ ផ្កាយតូច", english: "Twinkle twinkle little star", meaning: "ផ្កាយ = Pkay · Star", t: 0 },
+        { khmer: "ខ្ញុំចង់ដឹងថាអ្នកជាអ្វី", english: "How I wonder what you are", meaning: "មេឃ = Mek · Sky", t: 6 },
+        { khmer: "នៅខ្ពស់ពីលើពិភពលោក", english: "Up above the world so high", meaning: "ខ្ពស់ = Kpoh · High", t: 11 },
+        { khmer: "ដូចជាពេជ្រនៅលើមេឃ", english: "Like a diamond in the sky", meaning: "ពេជ្រ = Pech · Diamond", t: 16 },
+        { khmer: "ពន្លឺ ពន្លឺ ផ្កាយតូច", english: "Twinkle twinkle little star", meaning: "ពន្លឺ = Ponleu · Twinkle", t: 22 },
+        { khmer: "ខ្ញុំចង់ដឹងថាអ្នកជាអ្វី", english: "How I wonder what you are", meaning: "តូច = Toch · Little", t: 26 }
       ]
     },
     {
@@ -333,22 +367,22 @@ var songs = {
       ytid: "ByvgzgmXNAk",
       ytstart: 0,
       lyrics: [
-        { english: "My grandpa has a house by the rice field", meaning: "ជីតា = Chida · Grandpa", t: 0 },
-        { english: "By the rice field he raises chickens", meaning: "មាន់ = Moan · Chicken", t: 7 },
-        { english: "With a cluck-cluck here and a cluck-cluck there", meaning: "ក្អек = Kawk · Cluck", t: 13 },
-        { english: "Here a cluck, there a cluck", meaning: "ទីនេះ = Ti nih · Here", t: 17 },
-        { english: "Everywhere a cluck-cluck", meaning: "គ្រប់ = Krop · Every", t: 20 },
-        { english: "My grandpa has a house by the rice field", meaning: "ស្រែ = Srae · Rice field", t: 22 },
-        { english: "By the rice field he raises ducks", meaning: "ទា = Tea · Duck", t: 29 },
-        { english: "With a quack-quack here and a quack-quack there", meaning: "កាប = Kap · Quack", t: 36 },
-        { english: "Here a quack, there a quack", meaning: "ទីនោះ = Ti nuh · There", t: 39 },
-        { english: "Everywhere a quack-quack", meaning: "ទីកន្លែង = Ti konlaeng · Place", t: 42 },
-        { english: "My grandpa has a house by the rice field", meaning: "ផ្ទះ = Pteah · House", t: 44 },
-        { english: "By the rice field he raises cows", meaning: "គោ = Ko · Cow", t: 51 },
-        { english: "With a moo-moo here and a moo-moo there", meaning: "មូ = Moo · Cow sound", t: 58 },
-        { english: "Here a moo, there a moo", meaning: "ទីនេះ = Ti nih · Here", t: 62 },
-        { english: "Everywhere a moo-moo", meaning: "គ្រប់ = Krop · Every", t: 64 },
-        { english: "My grandpa has a house by the rice field", meaning: "ជីតា = Chida · Grandpa", t: 67 }
+        { khmer: "ជីតាខ្ញុំ មានផ្ទះនៅស្រែ", english: "My grandpa has a house by the rice field", meaning: "ជីតា = Chida · Grandpa", t: 0 },
+        { khmer: "នៅស្រែ គាត់ចិញ្ចឹមមាន់", english: "By the rice field he raises chickens", meaning: "មាន់ = Moan · Chicken", t: 7 },
+        { khmer: "ក្អែក ក្អែក នៅទីនេះ ក្អែក ក្អែក នៅទីនោះ", english: "With a cluck-cluck here and a cluck-cluck there", meaning: "ក្អែក = Kawk · Cluck", t: 13 },
+        { khmer: "ទីនេះ ក្អែក ទីនោះ ក្អែក", english: "Here a cluck, there a cluck", meaning: "ទីនេះ = Ti nih · Here", t: 17 },
+        { khmer: "គ្រប់ទីកន្លែង ក្អែក ក្អែក", english: "Everywhere a cluck-cluck", meaning: "គ្រប់ = Krop · Every", t: 20 },
+        { khmer: "ជីតាខ្ញុំ មានផ្ទះនៅស្រែ", english: "My grandpa has a house by the rice field", meaning: "ស្រែ = Srae · Rice field", t: 22 },
+        { khmer: "នៅស្រែ គាត់ចិញ្ចឹមទា", english: "By the rice field he raises ducks", meaning: "ទា = Tea · Duck", t: 29 },
+        { khmer: "កាប កាប នៅទីនេះ កាប កាប នៅទីនោះ", english: "With a quack-quack here and a quack-quack there", meaning: "កាប = Kap · Quack", t: 36 },
+        { khmer: "ទីនេះ កាប ទីនោះ កាប", english: "Here a quack, there a quack", meaning: "ទីនោះ = Ti nuh · There", t: 39 },
+        { khmer: "គ្រប់ទីកន្លែង កាប កាប", english: "Everywhere a quack-quack", meaning: "ទីកន្លែង = Ti konlaeng · Place", t: 42 },
+        { khmer: "ជីតាខ្ញុំ មានផ្ទះនៅស្រែ", english: "My grandpa has a house by the rice field", meaning: "ផ្ទះ = Pteah · House", t: 44 },
+        { khmer: "នៅស្រែ គាត់ចិញ្ចឹមគោ", english: "By the rice field he raises cows", meaning: "គោ = Ko · Cow", t: 51 },
+        { khmer: "មូ មូ នៅទីនេះ មូ មូ នៅទីនោះ", english: "With a moo-moo here and a moo-moo there", meaning: "មូ = Moo · Cow sound", t: 58 },
+        { khmer: "ទីនេះ មូ ទីនោះ មូ", english: "Here a moo, there a moo", meaning: "ទីនេះ = Ti nih · Here", t: 62 },
+        { khmer: "គ្រប់ទីកន្លែង មូ មូ", english: "Everywhere a moo-moo", meaning: "គ្រប់ = Krop · Every", t: 64 },
+        { khmer: "ជីតាខ្ញុំ មានផ្ទះនៅស្រែ", english: "My grandpa has a house by the rice field", meaning: "ជីតា = Chida · Grandpa", t: 67 }
       ]
     },
     {
@@ -356,14 +390,14 @@ var songs = {
       artist: "ពេលសប្បាយ · Khmer Version",
       ytid: "rWgcFID7XOA",
       lyrics: [
-        { english: "If you're happy and you know it", meaning: "បើអ្នកសប្បាយ ហើយដឹងខ្លួន" },
-        { english: "Clap your hands!", meaning: "拍 ដៃ! (Dak dai) · Clap!" },
-        { english: "If you're happy and you know it", meaning: "បើអ្នកសប្បាយ ហើយដឹងខ្លួន" },
-        { english: "Clap your hands!", meaning: "ដៃ = Dai · Hands" },
-        { english: "If you're happy and you know it", meaning: "សប្បាយ = Sabay · Happy" },
-        { english: "Then your face will surely show it", meaning: "មុខ = Mok · Face" },
-        { english: "If you're happy and you know it", meaning: "បើអ្នកសប្បាយ ហើយដឹងខ្លួន" },
-        { english: "Clap your hands!", meaning: "ដៃ ដៃ! Clap clap!" }
+        { khmer: "បើអ្នកសប្បាយ ហើយដឹងខ្លួន", english: "If you're happy and you know it", meaning: "សប្បាយ = Sabay · Happy", t: 0 },
+        { khmer: "拍ដៃ! ដៃ!", english: "Clap your hands!", meaning: "ដៃ = Dai · Hands", t: 6 },
+        { khmer: "បើអ្នកសប្បាយ ហើយដឹងខ្លួន", english: "If you're happy and you know it", meaning: "ដឹងខ្លួន = Deng khluon · Know it", t: 12 },
+        { khmer: "ដៃ! ដៃ!", english: "Clap your hands!", meaning: "ដៃ = Dai · Hands", t: 18 },
+        { khmer: "បើអ្នកសប្បាយ ហើយដឹងខ្លួន", english: "If you're happy and you know it", meaning: "បើ = Bae · If", t: 22 },
+        { khmer: "មុខអ្នកនឹងបង្ហាញ", english: "Then your face will surely show it", meaning: "មុខ = Mok · Face", t: 28 },
+        { khmer: "បើអ្នកសប្បាយ ហើយដឹងខ្លួន", english: "If you're happy and you know it", meaning: "អ្នក = Neak · You", t: 34 },
+        { khmer: "ដៃ! ដៃ!", english: "Clap your hands!", meaning: "ដៃ ដៃ! · Clap clap!", t: 40 }
       ]
     }
   ]
@@ -521,7 +555,12 @@ function renderLyrics(type, idx) {
     var div = document.createElement('div');
     div.className = 'lyric-line';
     div.id = type + '-line-' + i;
-    div.innerHTML = '<div class="english">' + l.english + '</div><div class="meaning">' + l.meaning + '</div>';
+    var primary = window.learningLang === 'english' ? (l.english || '') : (l.khmer || l.english || '');
+    var secondary = window.learningLang === 'english' ? (l.khmer || '') : (l.english || '');
+    var primaryClass = window.learningLang === 'english' ? 'english' : 'khmer';
+    div.innerHTML = '<div class="' + primaryClass + '">' + primary + '</div>' +
+                    (secondary ? '<div class="' + (window.learningLang === 'english' ? 'khmer' : 'english') + '" style="font-size:13px;color:var(--muted);margin-top:2px;">' + secondary + '</div>' : '') +
+                    (l.meaning ? '<div class="meaning">' + l.meaning + '</div>' : '');
     container.appendChild(div);
   });
 }
@@ -625,6 +664,31 @@ function toggleSingKids() {
     clearInterval(s.timer);
     if (kidsPlayer) kidsPlayer.pauseVideo();
   }
+}
+
+// Language mode
+window.learningLang = 'khmer'; // default
+
+function setLang(lang) {
+  window.learningLang = lang;
+  document.getElementById('lang-overlay').style.display = 'none';
+  var flag = document.getElementById('lang-flag');
+  var label = document.getElementById('lang-label');
+  if (lang === 'english') {
+    flag.textContent = '🇬🇧';
+    label.textContent = 'Learning English';
+  } else {
+    flag.textContent = '🇰🇭';
+    label.textContent = 'Learning Khmer';
+  }
+  // Re-render any open lyrics
+  ['khmer','kids'].forEach(function(type) {
+    var idx = state[type].songIndex;
+    var player = document.getElementById(type + '-player');
+    if (player && player.classList.contains('visible')) {
+      renderLyrics(type, idx);
+    }
+  });
 }
 
 var kidsPlayer = null;
