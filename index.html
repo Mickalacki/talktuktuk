@@ -510,8 +510,6 @@ var songs = {
 var state = {
   khmer:  { current: -1, playing: false, timer: null, songIndex: 0, startTime: 0 },
   kids:   { current: -1, playing: false, timer: null, songIndex: 0, startTime: 0 },
-  basics: { current: -1, playing: false, timer: null, songIndex: 0, startTime: 0 },
-  kids:   { current: -1, playing: false, timer: null, songIndex: 0, startTime: 0 },
   basics: { current: -1, playing: false, timer: null, songIndex: 0, startTime: 0 }
 };
 var INTERVAL = 4200;
@@ -611,7 +609,8 @@ function openPlayer(type, idx) {
   }
 
   document.getElementById(type + '-progress').style.width = '0%';
-  document.getElementById(type + '-btn').textContent = '▶ Sing Along!';
+  var btnText = type === 'basics' ? '▶ Listen & Learn!' : '▶ Sing Along!';
+  document.getElementById(type + '-btn').textContent = btnText;
   document.getElementById(type + '-btn').classList.remove('playing');
 
   renderLyrics(type, idx);
@@ -623,8 +622,9 @@ function goToList(type) {
   state[type].current = -1;
   state[type].startTime = 0;
   if (type === 'kids' && kidsPlayer) kidsPlayer.stopVideo();
-  else document.getElementById(type + '-iframe').src = '';
-  document.getElementById(type + '-btn').textContent = '▶ Sing Along!';
+  else { var iframe = document.getElementById(type + '-iframe'); if(iframe) iframe.src = ''; }
+  var btnText = type === 'basics' ? '▶ Listen & Learn!' : '▶ Sing Along!';
+  document.getElementById(type + '-btn').textContent = btnText;
   document.getElementById(type + '-btn').classList.remove('playing');
   document.getElementById(type + '-player').classList.remove('visible');
   document.getElementById(type + '-list').style.display = 'flex';
