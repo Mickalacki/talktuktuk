@@ -93,10 +93,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
 .lyrics-section { padding: 14px 18px 20px; max-height: 320px; overflow-y: auto; scroll-behavior: smooth; }
 .lyrics-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); margin-bottom: 10px; }
 .lyric-line { padding: 10px 14px; border-radius: 10px; margin-bottom: 6px; transition: background 0.3s, transform 0.2s; }
-.lyric-line .english { font-size: 15px; font-weight: 700; color: var(--dark); line-height: 1.3; }
-.lyric-line .meaning { font-size: 12px; color: var(--muted); margin-top: 3px; font-style: italic; }
 .lyric-line.active { background: var(--yellow); transform: scale(1.02); }
-.lyric-line.active .english { color: var(--dark); }
 .lyric-line.sung { opacity: 0.4; }
 
 /* COMING SOON */
@@ -133,9 +130,9 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
 .lang-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.1); border-radius: 20px; padding: 6px 14px; margin: 10px 12px 0; cursor: pointer; }
 .lang-badge span { font-size: 12px; font-weight: 700; color: white; text-transform: uppercase; letter-spacing: 1px; }
 .lang-badge .flag { font-size: 18px; }
-.lyric-line .khmer { font-size: 15px; font-weight: 700; color: var(--dark); line-height: 1.4; }
-.lyric-line .english { font-size: 13px; color: var(--muted); margin-top: 2px; }
-.lyric-line .meaning { font-size: 11px; color: #aaa; margin-top: 2px; font-style: italic; }
+.lyric-line .khmer { font-size: 15px; font-weight: 700; color: var(--dark); line-height: 1.3; }
+.lyric-line .english { font-size: 13px; font-weight: 600; color: var(--dark); line-height: 1.3; }
+.lyric-line .meaning { font-size: 11px; color: var(--muted); margin-top: 1px; font-style: italic; }
 .lyric-line.active .khmer { color: var(--dark); }
 .lyric-line.active .english { color: #444; }
 .lyric-line.active .meaning { color: #666; }
@@ -696,8 +693,10 @@ function toggleSing(type) {
     btn.classList.add('playing');
     if (type === 'basics') {
       var iframe = document.getElementById('basics-iframe');
-      if (iframe && iframe.src && !iframe.src.includes('autoplay=1')) {
-        iframe.src = iframe.src + '&autoplay=1';
+      if (iframe) {
+        var src = iframe.getAttribute('data-src') || iframe.src;
+        iframe.src = src.replace('autoplay=0','autoplay=1');
+        if (!iframe.src.includes('autoplay')) iframe.src += '&autoplay=1';
       }
     }
     if (hasTimestamps(type, s.songIndex)) {
