@@ -663,7 +663,7 @@ function renderLyrics(type, idx) {
     var secondary = window.learningLang === 'english' ? (l.khmer || '') : (l.english || '');
     var primaryClass = window.learningLang === 'english' ? 'english' : 'khmer';
     div.innerHTML = '<div class="' + primaryClass + '">' + primary + '</div>' +
-                    (secondary ? '<div class="' + (window.learningLang === 'english' ? 'khmer' : 'english') + '" style="font-size:13px;color:var(--muted);margin-top:2px;">' + secondary + '</div>' : '') +
+                    (secondary ? '<div class="' + (window.learningLang === 'english' ? 'khmer' : 'english') + '">' + secondary + '</div>' : '') +
                     (l.meaning ? '<div class="meaning">' + l.meaning + '</div>' : '');
     container.appendChild(div);
   });
@@ -689,10 +689,17 @@ function updateLine(type, n) {
 function toggleSing(type) {
   var btn = document.getElementById(type + '-btn');
   var s = state[type];
+  var singText = type === 'basics' ? '▶ Listen & Learn!' : '▶ Sing Along!';
   if (!s.playing) {
     s.playing = true;
     btn.textContent = '⏸ Pause';
     btn.classList.add('playing');
+    if (type === 'basics') {
+      var iframe = document.getElementById('basics-iframe');
+      if (iframe && iframe.src && !iframe.src.includes('autoplay=1')) {
+        iframe.src = iframe.src + '&autoplay=1';
+      }
+    }
     if (hasTimestamps(type, s.songIndex)) {
       s.startTime = Date.now();
       s.timer = setInterval(function() { tickTimestamp(type); }, 250);
@@ -702,7 +709,7 @@ function toggleSing(type) {
     }
   } else {
     s.playing = false;
-    btn.textContent = '▶ Sing Along!';
+    btn.textContent = singText;
     btn.classList.remove('playing');
     clearInterval(s.timer);
   }
@@ -718,7 +725,7 @@ function advanceLine(type) {
     clearInterval(s.timer);
     s.playing = false;
     var btn = document.getElementById(type + '-btn');
-    btn.textContent = '▶ Sing Again!';
+    btn.textContent = type === 'basics' ? '▶ Listen Again!' : '▶ Sing Again!';
     btn.classList.remove('playing');
   }
 }
