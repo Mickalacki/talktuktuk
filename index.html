@@ -130,11 +130,11 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
 .lang-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.1); border-radius: 20px; padding: 6px 14px; margin: 10px 12px 0; cursor: pointer; }
 .lang-badge span { font-size: 12px; font-weight: 700; color: white; text-transform: uppercase; letter-spacing: 1px; }
 .lang-badge .flag { font-size: 18px; }
-.lyric-line .khmer { font-size: 15px; font-weight: 700; color: var(--dark); line-height: 1.3; }
-.lyric-line .english { font-size: 13px; font-weight: 600; color: var(--dark); line-height: 1.3; }
-.lyric-line .meaning { font-size: 11px; color: var(--muted); margin-top: 1px; font-style: italic; }
+.lyric-line .khmer { font-size: 15px; font-weight: 700; color: var(--dark); line-height: 1.3; margin-bottom: 0; }
+.lyric-line .english { font-size: 12px; font-weight: 400; color: var(--muted); line-height: 1.3; margin-top: 1px; }
+.lyric-line .meaning { font-size: 11px; color: #aaa; margin-top: 1px; font-style: italic; }
 .lyric-line.active .khmer { color: var(--dark); }
-.lyric-line.active .english { color: #444; }
+.lyric-line.active .english { color: #555; }
 .lyric-line.active .meaning { color: #666; }
 .footer { text-align: center; margin-top: 28px; font-size: 11px; color: rgba(255,255,255,0.3); }
 </style>
@@ -694,13 +694,14 @@ function toggleSing(type) {
     if (type === 'basics') {
       var iframe = document.getElementById('basics-iframe');
       if (iframe) {
-        var src = iframe.getAttribute('data-src') || iframe.src;
-        iframe.src = src.replace('autoplay=0','autoplay=1');
-        if (!iframe.src.includes('autoplay')) iframe.src += '&autoplay=1';
+        var src = (iframe.getAttribute('data-src') || iframe.src).replace('autoplay=0','autoplay=1');
+        if (!src.includes('autoplay=1')) src += '&autoplay=1';
+        iframe.src = src;
       }
     }
     if (hasTimestamps(type, s.songIndex)) {
-      s.startTime = Date.now();
+      // Add 4s delay for basics to account for video load time
+      s.startTime = type === 'basics' ? Date.now() + 4000 : Date.now();
       s.timer = setInterval(function() { tickTimestamp(type); }, 250);
     } else {
       advanceLine(type);
