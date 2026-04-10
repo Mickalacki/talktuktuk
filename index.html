@@ -66,7 +66,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
 .song-arrow { margin-left: auto; font-size: 18px; color: #ccc; }
 
 /* PLAYER */
-.player-wrap { margin: 12px 12px 0; background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.35); display: none; }
+.player-wrap { margin: 12px 12px 0; background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.35); display: none; position: relative; }
 .player-wrap.visible { display: block; }
 .player-header { padding: 14px 18px; display: flex; align-items: center; gap: 10px; }
 .player-header.khmer { background: var(--blue); }
@@ -136,6 +136,10 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
 .lyric-line.active .khmer { color: var(--dark); }
 .lyric-line.active .english { color: #555; }
 .lyric-line.active .meaning { color: #666; }
+.countdown-overlay { display: none; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 10; align-items: center; justify-content: center; border-radius: 16px; }
+.countdown-overlay.active { display: flex; }
+.countdown-number { font-family: "Fredoka One", cursive; font-size: 80px; color: white; text-align: center; line-height: 1; }
+.countdown-text { font-size: 16px; color: rgba(255,255,255,0.7); margin-top: 8px; text-align: center; }
 .footer { text-align: center; margin-top: 28px; font-size: 11px; color: rgba(255,255,255,0.3); }
 </style>
 <script src="https://www.youtube.com/iframe_api"></script>
@@ -301,6 +305,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
           <div class="player-artist" id="basics-player-artist"></div>
         </div>
       </div>
+      <div class="countdown-overlay" id="basics-countdown"><div><div class="countdown-number" id="basics-count-num">3</div><div class="countdown-text">Get ready!</div></div></div>
       <div class="video-wrap"><iframe id="basics-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
       <div class="progress-bar-wrap"><div class="progress-bar pb-kids" id="basics-progress"></div></div>
       <div class="controls">
@@ -684,7 +689,6 @@ function toggleSing(type) {
   var s = state[type];
   var singText = type === 'basics' ? '▶ Listen & Learn!' : '▶ Sing Along!';
   if (!s.playing) {
-    s.playing = true;
     btn.textContent = '⏸ Pause';
     btn.classList.add('playing');
     if (type === 'basics') {
@@ -695,14 +699,16 @@ function toggleSing(type) {
         iframe.src = src;
       }
     }
-    if (hasTimestamps(type, s.songIndex)) {
-      // Add 4s delay for basics to account for video load time
-      s.startTime = type === 'basics' ? Date.now() + 4000 : Date.now();
-      s.timer = setInterval(function() { tickTimestamp(type); }, 250);
-    } else {
-      advanceLine(type);
-      s.timer = setInterval(function() { advanceLine(type); }, INTERVAL);
-    }
+    startCountdown(type, function() {
+      s.playing = true;
+      if (hasTimestamps(type, s.songIndex)) {
+        s.startTime = Date.now();
+        s.timer = setInterval(function() { tickTimestamp(type); }, 250);
+      } else {
+        advanceLine(type);
+        s.timer = setInterval(function() { advanceLine(type); }, INTERVAL);
+      }
+    });
   } else {
     s.playing = false;
     btn.textContent = singText;
@@ -753,17 +759,19 @@ function toggleSingKids() {
   var btn = document.getElementById(type + '-btn');
   var s = state[type];
   if (!s.playing) {
-    s.playing = true;
     btn.textContent = '⏸ Pause';
     btn.classList.add('playing');
     if (kidsPlayer) kidsPlayer.playVideo();
-    s.startTime = Date.now();
-    if (hasTimestamps(type, s.songIndex)) {
-      s.timer = setInterval(function() { tickTimestamp(type); }, 250);
-    } else {
-      advanceLine(type);
-      s.timer = setInterval(function() { advanceLine(type); }, INTERVAL);
-    }
+    startCountdown(type, function() {
+      s.playing = true;
+      s.startTime = Date.now();
+      if (hasTimestamps(type, s.songIndex)) {
+        s.timer = setInterval(function() { tickTimestamp(type); }, 250);
+      } else {
+        advanceLine(type);
+        s.timer = setInterval(function() { advanceLine(type); }, INTERVAL);
+      }
+    });
   } else {
     s.playing = false;
     btn.textContent = '▶ Sing Along!';
@@ -771,6 +779,25 @@ function toggleSingKids() {
     clearInterval(s.timer);
     if (kidsPlayer) kidsPlayer.pauseVideo();
   }
+}
+
+function startCountdown(type, callback) {
+  var overlay = document.getElementById(type + '-countdown');
+  var numEl = document.getElementById(type + '-count-num');
+  if (!overlay || !numEl) { callback(); return; }
+  var count = 3;
+  numEl.textContent = count;
+  overlay.classList.add('active');
+  var interval = setInterval(function() {
+    count--;
+    if (count > 0) {
+      numEl.textContent = count;
+    } else {
+      clearInterval(interval);
+      overlay.classList.remove('active');
+      callback();
+    }
+  }, 1000);
 }
 
 // Language mode
