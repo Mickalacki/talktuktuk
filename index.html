@@ -289,6 +289,26 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
         <div class="song-item-header">
           <div class="song-badge badge-kids">2</div>
           <div>
+            <div class="song-info-title">Days of the Week</div>
+            <div class="song-info-sub">ថ្ងៃក្នុងសប្តាហ៍ · Beginner</div>
+          </div>
+          <div class="song-arrow">▶</div>
+        </div>
+      </div>
+      <div class="song-item" onclick="openPlayer('basics', 2)">
+        <div class="song-item-header">
+          <div class="song-badge badge-kids">3</div>
+          <div>
+            <div class="song-info-title">Food in Khmer</div>
+            <div class="song-info-sub">ម្ហូបអាហារ · Beginner</div>
+          </div>
+          <div class="song-arrow">▶</div>
+        </div>
+      </div>
+      <div class="song-item" onclick="openPlayer('basics', 3)">
+        <div class="song-item-header">
+          <div class="song-badge badge-kids">4</div>
+          <div>
             <div class="song-info-title">Colours in Khmer</div>
             <div class="song-info-sub">ពណ៌ · Beginner</div>
           </div>
@@ -306,7 +326,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
         </div>
       </div>
       <div class="countdown-overlay" id="basics-countdown"><div><div class="countdown-number" id="basics-count-num">3</div><div class="countdown-text">Get ready!</div></div></div>
-      <div class="video-wrap"><iframe id="basics-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+      <div class="video-wrap" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;"><div id="basics-yt-player" style="position:absolute;top:0;left:0;width:100%;height:100%;"></div></div>
       <div class="progress-bar-wrap"><div class="progress-bar pb-kids" id="basics-progress"></div></div>
       <div class="controls">
         <button class="btn-sing kids" id="basics-btn" onclick="toggleSing('basics')">▶ Listen &amp; Learn!</button>
@@ -445,6 +465,40 @@ var songs = {
       ]
     },
     {
+      title: "Days of the Week",
+      artist: "ថ្ងៃក្នុងសប្តាហ៍ · Khmer Days",
+      ytid: "Znr2Tn4Xlnk",
+      ytstart: 0,
+      lyrics: [
+        { khmer: "ថ្ងៃ", english: "Day", meaning: "Tngai = Day" },
+        { khmer: "ថ្ងៃចន្ទ", english: "Monday", meaning: "Tngai Chan = Monday" },
+        { khmer: "ថ្ងៃអង្គារ", english: "Tuesday", meaning: "Tngai Angkear = Tuesday" },
+        { khmer: "ថ្ងៃពុធ", english: "Wednesday", meaning: "Tngai Put = Wednesday" },
+        { khmer: "ថ្ងៃព្រហស្បតិ៍", english: "Thursday", meaning: "Tngai Prohoas = Thursday" },
+        { khmer: "ថ្ងៃសុក្រ", english: "Friday", meaning: "Tngai Sok = Friday" },
+        { khmer: "ថ្ងៃសៅរ៍", english: "Saturday", meaning: "Tngai Sau = Saturday" },
+        { khmer: "ថ្ងៃអាទិត្យ", english: "Sunday", meaning: "Tngai Artit = Sunday" },
+        { khmer: "ចុងសប្តាហ៍", english: "Weekend", meaning: "Chong Sabda = Weekend" }
+      ]
+    },
+    {
+      title: "Food in Khmer",
+      artist: "ម្ហូបអាហារ · Khmer Food",
+      ytid: "7KVLqED9k9g",
+      ytstart: 0,
+      lyrics: [
+        { khmer: "បាយ", english: "Rice", meaning: "Bai = Rice" },
+        { khmer: "សម្លរ", english: "Soup", meaning: "Samlor = Soup" },
+        { khmer: "ត្រីចៀន", english: "Fried fish", meaning: "Trei Chean = Fried fish" },
+        { khmer: "មាន់អាំង", english: "Roast chicken", meaning: "Moan Ang = Roast chicken" },
+        { khmer: "សាច់គោអាំង", english: "Steak", meaning: "Sach Ko Ang = Steak" },
+        { khmer: "សាច់អាំង", english: "BBQ", meaning: "Sach Ang = BBQ" },
+        { khmer: "សាច់ក្រក", english: "Sausage", meaning: "Sach Krok = Sausage" },
+        { khmer: "មាន់炒", english: "Chicken fried", meaning: "Moan Chao = Fried chicken" },
+        { khmer: "ដំឡូងបំពង", english: "French fries", meaning: "Damlong Bampong = French fries" }
+      ]
+    },
+    {
       title: "Colours in Khmer",
       artist: "ពណ៌ · Khmer Colours",
       ytid: "wsul4reg3Uc",
@@ -480,6 +534,40 @@ var songs = {
         { khmer: "៨ — ប្រាំបី", english: "Eight", meaning: "pram bei = Eight", t: 36 },
         { khmer: "៩ — ប្រាំបួន", english: "Nine", meaning: "pram buon = Nine", t: 41 },
         { khmer: "១០ — ដប់", english: "Ten", meaning: "dop = Ten", t: 47 }
+      ]
+    },
+    {
+      title: "Days of the Week",
+      artist: "ថ្ងៃក្នុងសប្តាហ៍ · Khmer Days",
+      ytid: "Znr2Tn4Xlnk",
+      ytstart: 0,
+      lyrics: [
+        { khmer: "ថ្ងៃ", english: "Day", meaning: "Tngai = Day" },
+        { khmer: "ថ្ងៃចន្ទ", english: "Monday", meaning: "Tngai Chan = Monday" },
+        { khmer: "ថ្ងៃអង្គារ", english: "Tuesday", meaning: "Tngai Angkear = Tuesday" },
+        { khmer: "ថ្ងៃពុធ", english: "Wednesday", meaning: "Tngai Put = Wednesday" },
+        { khmer: "ថ្ងៃព្រហស្បតិ៍", english: "Thursday", meaning: "Tngai Prohoas = Thursday" },
+        { khmer: "ថ្ងៃសុក្រ", english: "Friday", meaning: "Tngai Sok = Friday" },
+        { khmer: "ថ្ងៃសៅរ៍", english: "Saturday", meaning: "Tngai Sau = Saturday" },
+        { khmer: "ថ្ងៃអាទិត្យ", english: "Sunday", meaning: "Tngai Artit = Sunday" },
+        { khmer: "ចុងសប្តាហ៍", english: "Weekend", meaning: "Chong Sabda = Weekend" }
+      ]
+    },
+    {
+      title: "Food in Khmer",
+      artist: "ម្ហូបអាហារ · Khmer Food",
+      ytid: "7KVLqED9k9g",
+      ytstart: 0,
+      lyrics: [
+        { khmer: "បាយ", english: "Rice", meaning: "Bai = Rice" },
+        { khmer: "សម្លរ", english: "Soup", meaning: "Samlor = Soup" },
+        { khmer: "ត្រីចៀន", english: "Fried fish", meaning: "Trei Chean = Fried fish" },
+        { khmer: "មាន់អាំង", english: "Roast chicken", meaning: "Moan Ang = Roast chicken" },
+        { khmer: "សាច់គោអាំង", english: "Steak", meaning: "Sach Ko Ang = Steak" },
+        { khmer: "សាច់អាំង", english: "BBQ", meaning: "Sach Ang = BBQ" },
+        { khmer: "សាច់ក្រក", english: "Sausage", meaning: "Sach Krok = Sausage" },
+        { khmer: "មាន់炒", english: "Chicken fried", meaning: "Moan Chao = Fried chicken" },
+        { khmer: "ដំឡូងបំពង", english: "French fries", meaning: "Damlong Bampong = French fries" }
       ]
     },
     {
@@ -617,6 +705,7 @@ function goToList(type) {
   state[type].current = -1;
   state[type].startTime = 0;
   if (type === 'kids' && kidsPlayer) kidsPlayer.stopVideo();
+  else if (type === 'basics' && basicsPlayer) basicsPlayer.stopVideo();
   else { var iframe = document.getElementById(type + '-iframe'); if(iframe) iframe.src = ''; }
   var btnText = type === 'basics' ? '▶ Listen & Learn!' : '▶ Sing Along!';
   document.getElementById(type + '-btn').textContent = btnText;
@@ -635,6 +724,11 @@ function closePlayer(type) {
     if (kidsPlayer) {
       kidsPlayer.seekTo(songs.kids[idx].ytstart || 0, true);
       kidsPlayer.pauseVideo();
+    }
+  } else if (type === 'basics') {
+    if (basicsPlayer) {
+      basicsPlayer.seekTo(songs.basics[idx].ytstart || 0, true);
+      basicsPlayer.pauseVideo();
     }
   } else {
     var s = songs[type][idx];
@@ -691,29 +785,20 @@ function toggleSing(type) {
   if (!s.playing) {
     btn.textContent = '⏸ Pause';
     btn.classList.add('playing');
-    if (type === 'basics') {
-      var iframe = document.getElementById('basics-iframe');
-      if (iframe) {
-        var src = (iframe.getAttribute('data-src') || iframe.src).replace('autoplay=0','autoplay=1');
-        if (!src.includes('autoplay=1')) src += '&autoplay=1';
-        iframe.src = src;
-      }
-    }
-    startCountdown(type, function() {
-      s.playing = true;
-      if (hasTimestamps(type, s.songIndex)) {
-        s.startTime = Date.now();
+    if (type === 'basics' && basicsPlayer) basicsPlayer.playVideo();
+    s.playing = true;
+    if (hasTimestamps(type, s.songIndex)) {
         s.timer = setInterval(function() { tickTimestamp(type); }, 250);
-      } else {
-        advanceLine(type);
-        s.timer = setInterval(function() { advanceLine(type); }, INTERVAL);
-      }
-    });
+    } else {
+      advanceLine(type);
+      s.timer = setInterval(function() { advanceLine(type); }, INTERVAL);
+    }
   } else {
     s.playing = false;
     btn.textContent = singText;
     btn.classList.remove('playing');
     clearInterval(s.timer);
+    if (type === 'basics' && basicsPlayer) basicsPlayer.pauseVideo();
   }
 }
 
@@ -824,6 +909,8 @@ function setLang(lang) {
 }
 
 var kidsPlayer = null;
+var basicsPlayer = null;
+var pendingBasicsVideo = null;
 var pendingKidsVideo = null;
 
 function onYouTubeIframeAPIReady() {
@@ -838,6 +925,21 @@ function onYouTubeIframeAPIReady() {
           kidsPlayer.loadVideoById(pendingKidsVideo);
           kidsPlayer.pauseVideo();
           pendingKidsVideo = null;
+        }
+      }
+    }
+  });
+  basicsPlayer = new YT.Player('basics-yt-player', {
+    height: '100%',
+    width: '100%',
+    videoId: 'V-rHNp3Z154',
+    playerVars: { rel: 0, playsinline: 1, modestbranding: 1 },
+    events: {
+      onReady: function() {
+        if (pendingBasicsVideo) {
+          basicsPlayer.loadVideoById(pendingBasicsVideo);
+          basicsPlayer.pauseVideo();
+          pendingBasicsVideo = null;
         }
       }
     }
