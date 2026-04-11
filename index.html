@@ -340,10 +340,36 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
 
   <!-- COMEDY -->
   <div class="panel" id="panel-comedy">
-    <div class="coming-soon-card">
-      <div class="big">😂</div>
-      <h2>Comedy Clips Coming Soon!</h2>
-      <p>Short clips from real Cambodian comedy shows — with translations. Learn the phrases locals actually use every day, including the ones your guidebook definitely left out!</p>
+    <div class="song-list" id="comedy-list">
+      <div class="song-item" onclick="openPlayer('comedy', 0)">
+        <div class="song-item-header">
+          <div class="song-badge badge-comedy">1</div>
+          <div>
+            <div class="song-info-title">Chas Steav — ចាស់ស្ទាវ</div>
+            <div class="song-info-sub">CTN Comedy · Family Sketch</div>
+          </div>
+          <div class="song-arrow">▶</div>
+        </div>
+      </div>
+    </div>
+    <div class="player-wrap" id="comedy-player">
+      <div class="player-header comedy">
+        <button class="player-back" onclick="goToList('comedy')">← Clips</button>
+        <button class="player-back" onclick="closePlayer('comedy')" style="margin-left:6px;">↺ Restart</button>
+        <div>
+          <div class="player-title" id="comedy-player-title"></div>
+          <div class="player-artist" id="comedy-player-artist"></div>
+        </div>
+      </div>
+      <div class="video-wrap" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;"><div id="comedy-yt-player" style="position:absolute;top:0;left:0;width:100%;height:100%;"></div></div>
+      <div class="progress-bar-wrap"><div class="progress-bar pb-comedy" id="comedy-progress"></div></div>
+      <div class="controls">
+        <button class="btn-sing comedy" id="comedy-btn" onclick="toggleSingComedy()">▶ Watch &amp; Learn!</button>
+      </div>
+      <div class="lyrics-section">
+        <div class="lyrics-label">Dialogue &amp; Translation</div>
+        <div id="comedy-lyrics"></div>
+      </div>
     </div>
   </div>
 
@@ -588,12 +614,34 @@ var songs = {
       ]
     }
   ]
+,
+  comedy: [
+    {
+      title: "Chas Steav — ចាស់ស្ទាវ",
+      artist: "CTN Comedy · Family Sketch",
+      ytid: "vWEGQA5kEUE",
+      ytstart: 0,
+      lyrics: [
+        { khmer: "មិនទាន់ទេម៉ែ ខ្ញុំអត់ចង់ជាន់ទេ", english: "Not yet, Mom. I didn't want to step on it.", meaning: "មិនទាន់ = Min tean · Not yet", t: 0 },
+        { khmer: "ហេ! ឯងដើរធ្វើអី? ខ្ញុំពិបាកចិត្តចង់ងាប់!", english: "Hey! What are you doing? I'm so stressed I could die!", meaning: "ពិបាកចិត្ត = Pibak chet · Stressed", t: 8 },
+        { khmer: "ខ្ញុំក៏ពិបាកចិត្តដែរ មើលមុខអូន ស្រកចាស់ហើយ", english: "I'm stressed too, Mom. Look — she looks worn out.", meaning: "ចាស់ = Chas · Old", t: 16 },
+        { khmer: "ពិបាកចិត្តរឿងអី?", english: "What are you stressed about?", meaning: "រឿង = Reung · About/Matter", t: 24 },
+        { khmer: "រឿងឪចាស់ហើយតែអត់ព្រមចាស់", english: "About Dad being old but not acting old!", meaning: "ឪ = Ov · Dad/Father", t: 32 },
+        { khmer: "វាមិនសមទេ ស្លៀកអីចឹងៗ", english: "It's not appropriate, dressing like that!", meaning: "ស្លៀក = Sleak · To dress/wear", t: 40 },
+        { khmer: "មើលខោផ្កានេះ គាត់យកពីណាមក?", english: "Look at these flower pants — where did he get them?", meaning: "ខោ = Khao · Pants/Trousers", t: 48 },
+        { khmer: "ចាស់ហើយតែច្នាស់ មិនគិតខ្លួនឯង!", english: "Old but stubborn, not thinking about himself!", meaning: "ច្នាស់ = Chnas · Stubborn", t: 56 },
+        { khmer: "គាត់ដើរតែជាមួយក្មេងៗ", english: "He only hangs out with young people.", meaning: "ក្មេង = Kmeng · Young person/Child", t: 64 },
+        { khmer: "សំណាងហើយម៉ែមានកូនឯង ប្តីអត់អាចពឹងបាន", english: "Lucky I have you. A husband like this can't be relied on!", meaning: "ប្តី = Bdei · Husband", t: 72 }
+      ]
+    }
+  ]
 };
 
 var state = {
   khmer:  { current: -1, playing: false, timer: null, songIndex: 0, startTime: 0 },
   kids:   { current: -1, playing: false, timer: null, songIndex: 0, startTime: 0 },
-  basics: { current: -1, playing: false, timer: null, songIndex: 0, startTime: 0 }
+  basics: { current: -1, playing: false, timer: null, songIndex: 0, startTime: 0 },
+  comedy: { current: -1, playing: false, timer: null, songIndex: 0, startTime: 0 }
 };
 var INTERVAL = 4200;
 
@@ -610,6 +658,8 @@ function tickTimestamp(type) {
     elapsed = kidsPlayer.getCurrentTime();
   } else if (type === 'basics' && basicsPlayer && basicsPlayer.getCurrentTime) {
     elapsed = basicsPlayer.getCurrentTime();
+  } else if (type === 'comedy' && comedyPlayer && comedyPlayer.getCurrentTime) {
+    elapsed = comedyPlayer.getCurrentTime();
   } else {
     elapsed = (Date.now() - s.startTime) / 1000;
   }
@@ -704,6 +754,13 @@ function openPlayer(type, idx) {
     } else {
       pendingBasicsVideo = { videoId: s.ytid, startSeconds: s.ytstart || 0 };
     }
+  } else if (type === 'comedy') {
+    if (comedyPlayer) {
+      comedyPlayer.loadVideoById({ videoId: s.ytid, startSeconds: s.ytstart || 0 });
+      comedyPlayer.pauseVideo();
+    } else {
+      pendingComedyVideo = { videoId: s.ytid, startSeconds: s.ytstart || 0 };
+    }
   } else {
     document.getElementById(type + '-iframe').src = 'https://www.youtube.com/embed/' + s.ytid + '?rel=0&playsinline=1' + start;
   }
@@ -723,6 +780,7 @@ function goToList(type) {
   state[type].startTime = 0;
   if (type === 'kids' && kidsPlayer) kidsPlayer.stopVideo();
   else if (type === 'basics' && basicsPlayer) basicsPlayer.stopVideo();
+  else if (type === 'comedy' && comedyPlayer) comedyPlayer.stopVideo();
   else { var iframe = document.getElementById(type + '-iframe'); if(iframe) iframe.src = ''; }
   var btnText = type === 'basics' ? '▶ Listen & Learn!' : '▶ Sing Along!';
   document.getElementById(type + '-btn').textContent = btnText;
@@ -746,6 +804,11 @@ function closePlayer(type) {
     if (basicsPlayer) {
       basicsPlayer.seekTo(songs.basics[idx].ytstart || 0, true);
       basicsPlayer.pauseVideo();
+    }
+  } else if (type === 'comedy') {
+    if (comedyPlayer) {
+      comedyPlayer.seekTo(songs.comedy[idx].ytstart || 0, true);
+      comedyPlayer.pauseVideo();
     }
   } else {
     var s = songs[type][idx];
@@ -900,6 +963,30 @@ function startCountdown(type, callback) {
   }, 1000);
 }
 
+function toggleSingComedy() {
+  var type = 'comedy';
+  var btn = document.getElementById(type + '-btn');
+  var s = state[type];
+  if (!s.playing) {
+    s.playing = true;
+    btn.textContent = '⏸ Pause';
+    btn.classList.add('playing');
+    if (comedyPlayer) comedyPlayer.playVideo();
+    if (hasTimestamps(type, s.songIndex)) {
+      s.timer = setInterval(function() { tickTimestamp(type); }, 250);
+    } else {
+      advanceLine(type);
+      s.timer = setInterval(function() { advanceLine(type); }, INTERVAL);
+    }
+  } else {
+    s.playing = false;
+    btn.textContent = '▶ Watch & Learn!';
+    btn.classList.remove('playing');
+    clearInterval(s.timer);
+    if (comedyPlayer) comedyPlayer.pauseVideo();
+  }
+}
+
 // Language mode
 window.learningLang = 'khmer'; // default
 
@@ -928,6 +1015,8 @@ function setLang(lang) {
 var kidsPlayer = null;
 var basicsPlayer = null;
 var pendingBasicsVideo = null;
+var comedyPlayer = null;
+var pendingComedyVideo = null;
 var pendingKidsVideo = null;
 
 function onYouTubeIframeAPIReady() {
@@ -957,6 +1046,21 @@ function onYouTubeIframeAPIReady() {
           basicsPlayer.loadVideoById(pendingBasicsVideo);
           basicsPlayer.pauseVideo();
           pendingBasicsVideo = null;
+        }
+      }
+    }
+  });
+  comedyPlayer = new YT.Player('comedy-yt-player', {
+    height: '100%',
+    width: '100%',
+    videoId: 'vWEGQA5kEUE',
+    playerVars: { rel: 0, playsinline: 1, modestbranding: 1 },
+    events: {
+      onReady: function() {
+        if (pendingComedyVideo) {
+          comedyPlayer.loadVideoById(pendingComedyVideo);
+          comedyPlayer.pauseVideo();
+          pendingComedyVideo = null;
         }
       }
     }
