@@ -758,18 +758,13 @@ function openPlayer(type, idx) {
       pendingBasicsVideo = { videoId: s.ytid, startSeconds: s.ytstart || 0 };
     }
   } else if (type === 'comedy') {
-    if (comedyPlayer) {
-      comedyPlayer.loadVideoById({ videoId: s.ytid, startSeconds: s.ytstart || 0 });
-      comedyPlayer.pauseVideo();
-    } else {
-      pendingComedyVideo = { videoId: s.ytid, startSeconds: s.ytstart || 0 };
-    }
+    initComedyPlayer(s.ytid, s.ytstart || 0);
   } else {
     document.getElementById(type + '-iframe').src = 'https://www.youtube.com/embed/' + s.ytid + '?rel=0&playsinline=1' + start;
   }
 
   document.getElementById(type + '-progress').style.width = '0%';
-  var btnText = type === 'basics' ? '▶ Listen & Learn!' : '▶ Sing Along!';
+  var btnText = type === 'basics' ? '▶ Listen & Learn!' : (type === 'comedy' ? '▶ Watch & Learn!' : '▶ Sing Along!');
   document.getElementById(type + '-btn').textContent = btnText;
   document.getElementById(type + '-btn').classList.remove('playing');
 
@@ -785,7 +780,7 @@ function goToList(type) {
   else if (type === 'basics' && basicsPlayer) basicsPlayer.stopVideo();
   else if (type === 'comedy' && comedyPlayer) comedyPlayer.stopVideo();
   else { var iframe = document.getElementById(type + '-iframe'); if(iframe) iframe.src = ''; }
-  var btnText = type === 'basics' ? '▶ Listen & Learn!' : '▶ Sing Along!';
+  var btnText = type === 'basics' ? '▶ Listen & Learn!' : (type === 'comedy' ? '▶ Watch & Learn!' : '▶ Sing Along!');
   document.getElementById(type + '-btn').textContent = btnText;
   document.getElementById(type + '-btn').classList.remove('playing');
   document.getElementById(type + '-player').classList.remove('visible');
@@ -1056,18 +1051,23 @@ function onYouTubeIframeAPIReady() {
       }
     }
   });
+  // Comedy player initialised lazily when tab is first opened
+}
+
+function initComedyPlayer(videoId, startSeconds) {
+  if (comedyPlayer) {
+    comedyPlayer.loadVideoById({ videoId: videoId, startSeconds: startSeconds || 0 });
+    comedyPlayer.pauseVideo();
+    return;
+  }
   comedyPlayer = new YT.Player('comedy-yt-player', {
     height: '100%',
     width: '100%',
-    videoId: 'vWEGQA5kEUE',
+    videoId: videoId,
     playerVars: { rel: 0, playsinline: 1, modestbranding: 1 },
     events: {
       onReady: function() {
-        if (pendingComedyVideo) {
-          comedyPlayer.loadVideoById(pendingComedyVideo);
-          comedyPlayer.pauseVideo();
-          pendingComedyVideo = null;
-        }
+        comedyPlayer.pauseVideo();
       }
     }
   });
