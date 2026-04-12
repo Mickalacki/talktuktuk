@@ -658,7 +658,7 @@ function tickTimestamp(type) {
     elapsed = kidsPlayer.getCurrentTime();
   } else if (type === 'basics' && basicsPlayer && basicsPlayer.getCurrentTime) {
     elapsed = basicsPlayer.getCurrentTime();
-  } else if (type === 'comedy' && comedyPlayer && comedyPlayer.getCurrentTime) {
+  } else if (type === 'comedy' && comedyPlayer && comedyPlayer.getCurrentTime && comedyPlayer.getPlayerState && comedyPlayer.getPlayerState() > 0) {
     elapsed = comedyPlayer.getCurrentTime();
   } else {
     elapsed = (Date.now() - s.startTime) / 1000;
@@ -974,7 +974,10 @@ function toggleSingComedy() {
     s.playing = true;
     btn.textContent = '⏸ Pause';
     btn.classList.add('playing');
-    if (comedyPlayer) comedyPlayer.playVideo();
+    if (comedyPlayer && comedyPlayer.playVideo) {
+      comedyPlayer.playVideo();
+    }
+    s.startTime = Date.now();
     if (hasTimestamps(type, s.songIndex)) {
       s.timer = setInterval(function() { tickTimestamp(type); }, 250);
     } else {
@@ -986,7 +989,7 @@ function toggleSingComedy() {
     btn.textContent = '▶ Watch & Learn!';
     btn.classList.remove('playing');
     clearInterval(s.timer);
-    if (comedyPlayer) comedyPlayer.pauseVideo();
+    if (comedyPlayer && comedyPlayer.pauseVideo) comedyPlayer.pauseVideo();
   }
 }
 
