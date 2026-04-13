@@ -764,8 +764,6 @@ function openPlayer(type, idx) {
   }
 
   document.getElementById(type + '-progress').style.width = '0%';
-  var btnText = type === 'basics' ? '▶ Listen & Learn!' : (type === 'comedy' ? '▶ Watch & Learn!' : '▶ Sing Along!');
-  document.getElementById(type + '-btn').textContent = btnText;
   document.getElementById(type + '-btn').classList.remove('playing');
 
   renderLyrics(type, idx);
