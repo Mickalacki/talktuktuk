@@ -687,10 +687,11 @@ function tickTimestamp(type) {
   var lyrs = songs[type][s.songIndex].lyrics;
   var elapsed;
 
+  var ytstart = songs[type][s.songIndex].ytstart || 0;
   if (type === 'kids' && kidsPlayer && kidsPlayer.getCurrentTime) {
-    elapsed = kidsPlayer.getCurrentTime();
+    elapsed = kidsPlayer.getCurrentTime() - ytstart;
   } else if (type === 'basics' && basicsPlayer && basicsPlayer.getCurrentTime) {
-    elapsed = basicsPlayer.getCurrentTime();
+    elapsed = basicsPlayer.getCurrentTime() - ytstart;
   } else {
     elapsed = (Date.now() - s.startTime) / 1000;
   }
