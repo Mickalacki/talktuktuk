@@ -271,93 +271,114 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
 
 
 
-  <!-- KHMER BASICS -->
-  <div class="panel" id="panel-basics">
-    <div class="song-list" id="basics-list">
-      <div class="song-item" onclick="openPlayer('basics', 0)">
-        <div class="song-item-header">
-          <div class="song-badge badge-kids">1</div>
-          <div>
-            <div class="song-info-title">Numbers 1 to 10</div>
-            <div class="song-info-sub">ចំនួន · Beginner</div>
+  <!-- PHRASES -->
+  <div class="panel" id="panel-phrases">
+
+    <!-- CATEGORY LIST -->
+    <div id="phrases-categories">
+      <div class="song-list">
+        <div class="song-item" onclick="openCategory('greetings')">
+          <div class="song-item-header">
+            <div class="song-badge badge-kids" style="background:#FFD600;font-size:22px;width:44px;height:44px;">👋</div>
+            <div>
+              <div class="song-info-title">Greetings</div>
+              <div class="song-info-sub">7 phrases · Hello, Thank you, Sorry...</div>
+            </div>
+            <div class="song-arrow">▶</div>
           </div>
-          <div class="song-arrow">▶</div>
         </div>
-      </div>
-      <div class="song-item" onclick="openPlayer('basics', 1)">
-        <div class="song-item-header">
-          <div class="song-badge badge-kids">2</div>
-          <div>
-            <div class="song-info-title">Days of the Week</div>
-            <div class="song-info-sub">ថ្ងៃក្នុងសប្តាហ៍ · Beginner</div>
+        <div class="song-item" onclick="openCategory('food')">
+          <div class="song-item-header">
+            <div class="song-badge badge-kids" style="background:#FF8F00;font-size:22px;width:44px;height:44px;">🍜</div>
+            <div>
+              <div class="song-info-title">Food &amp; Drink</div>
+              <div class="song-info-sub">9 phrases · Water, Beer, Delicious...</div>
+            </div>
+            <div class="song-arrow">▶</div>
           </div>
-          <div class="song-arrow">▶</div>
         </div>
-      </div>
-      <div class="song-item" onclick="openPlayer('basics', 2)">
-        <div class="song-item-header">
-          <div class="song-badge badge-kids">3</div>
-          <div>
-            <div class="song-info-title">Food in Khmer</div>
-            <div class="song-info-sub">ម្ហូបអាហារ · Beginner</div>
+        <div class="song-item" onclick="openCategory('transport')">
+          <div class="song-item-header">
+            <div class="song-badge badge-kids" style="background:#1565C0;font-size:22px;width:44px;height:44px;">🛺</div>
+            <div>
+              <div class="song-info-title">Getting Around</div>
+              <div class="song-info-sub">6 phrases · Turn left, Stop here...</div>
+            </div>
+            <div class="song-arrow">▶</div>
           </div>
-          <div class="song-arrow">▶</div>
         </div>
-      </div>
-      <div class="song-item" onclick="openPlayer('basics', 3)">
-        <div class="song-item-header">
-          <div class="song-badge badge-kids">4</div>
-          <div>
-            <div class="song-info-title">Khmer Essentials</div>
-            <div class="song-info-sub">ភាសាខ្មែរ · Beginner</div>
+        <div class="song-item" onclick="openCategory('social')">
+          <div class="song-item-header">
+            <div class="song-badge badge-kids" style="background:#2E7D32;font-size:22px;width:44px;height:44px;">🤝</div>
+            <div>
+              <div class="song-info-title">Social</div>
+              <div class="song-info-sub">5 phrases · What is your name...</div>
+            </div>
+            <div class="song-arrow">▶</div>
           </div>
-          <div class="song-arrow">▶</div>
         </div>
-      </div>
-      <div class="song-item" onclick="openPlayer('basics', 4)">
-        <div class="song-item-header">
-          <div class="song-badge badge-kids">5</div>
-          <div>
-            <div class="song-info-title">Food &amp; Drink</div>
-            <div class="song-info-sub">ម្ហូប និងភេសជ្ជៈ · Beginner</div>
+        <div class="song-item" onclick="openCategory('numbers')">
+          <div class="song-item-header">
+            <div class="song-badge badge-kids" style="background:#6A1B9A;font-size:22px;width:44px;height:44px;">🔢</div>
+            <div>
+              <div class="song-info-title">Numbers</div>
+              <div class="song-info-sub">10 phrases · 1 through 10</div>
+            </div>
+            <div class="song-arrow">▶</div>
           </div>
-          <div class="song-arrow">▶</div>
         </div>
-      </div>
-      <div class="song-item" onclick="openPlayer('basics', 5)">
-        <div class="song-item-header">
-          <div class="song-badge badge-kids">6</div>
-          <div>
-            <div class="song-info-title">Colours in Khmer</div>
-            <div class="song-info-sub">ពណ៌ · Beginner</div>
+        <div class="song-item" onclick="openCategory('days')">
+          <div class="song-item-header">
+            <div class="song-badge badge-kids" style="background:#00838F;font-size:22px;width:44px;height:44px;">📅</div>
+            <div>
+              <div class="song-info-title">Days</div>
+              <div class="song-info-sub">8 phrases · Monday to Sunday</div>
+            </div>
+            <div class="song-arrow">▶</div>
           </div>
-          <div class="song-arrow">▶</div>
+        </div>
+        <div class="song-item" onclick="openCategory('colours')">
+          <div class="song-item-header">
+            <div class="song-badge badge-kids" style="background:#AD1457;font-size:22px;width:44px;height:44px;">🎨</div>
+            <div>
+              <div class="song-info-title">Colours</div>
+              <div class="song-info-sub">8 phrases · Red, Blue, Green...</div>
+            </div>
+            <div class="song-arrow">▶</div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="player-wrap" id="basics-player">
-      <div class="player-header kids">
-        <button class="player-back" onclick="goToList('basics')">← Songs</button>
-        <button class="player-back" onclick="closePlayer('basics')" style="margin-left:6px;">↺ Restart</button>
-        <div>
-          <div class="player-title" id="basics-player-title"></div>
-          <div class="player-artist" id="basics-player-artist"></div>
+
+    <!-- PHRASE LIST (shown when category selected) -->
+    <div id="phrases-list" style="display:none;">
+      <div class="song-list" id="phrase-cards"></div>
+    </div>
+
+    <!-- PHRASE PLAYER (shown when phrase selected) -->
+    <div id="phrase-player" style="display:none;">
+      <div style="margin:12px 12px 0;background:white;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.35);">
+        <div class="player-header kids" style="display:flex;align-items:center;gap:8px;padding:12px 16px;">
+          <button class="player-back" onclick="closePhrasePlayer()">← Back</button>
+          <div>
+            <div class="player-title" id="phrase-player-title"></div>
+          </div>
+        </div>
+        <video id="phrase-video" controls playsinline style="width:100%;display:block;background:#000;" preload="auto">
+          <source id="phrase-video-src" src="" type="video/mp4">
+        </video>
+        <div style="padding:16px 18px 20px;">
+          <div style="font-family:'Fredoka One',cursive;font-size:28px;color:#1565C0;margin-bottom:6px;" id="phrase-khmer"></div>
+          <div style="font-size:16px;font-weight:700;color:#1a1a2e;margin-bottom:4px;" id="phrase-english"></div>
+          <div style="font-size:13px;color:#555;font-style:italic;" id="phrase-phonetic"></div>
         </div>
       </div>
-      <div class="countdown-overlay" id="basics-countdown"><div><div class="countdown-number" id="basics-count-num">3</div><div class="countdown-text">Get ready!</div></div></div>
-      <div class="video-wrap" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;"><div id="basics-yt-player" style="position:absolute;top:0;left:0;width:100%;height:100%;"></div></div>
-      <div class="progress-bar-wrap"><div class="progress-bar pb-kids" id="basics-progress"></div></div>
-      <div class="controls">
-        <button class="btn-sing kids" id="basics-btn" onclick="toggleSing('basics')">▶ Listen &amp; Learn!</button>
-      </div>
-      <div class="lyrics-section">
-        <div class="lyrics-label">Words &amp; Pronunciation</div>
-        <div id="basics-lyrics"></div>
-      </div>
     </div>
+
   </div>
 
   <!-- ABOUT -->
+
   <div class="panel" id="panel-about">
     <div class="about-card">
       <div class="about-title">About Talk Tuk Tuk</div>
@@ -739,7 +760,7 @@ function highlightLine(type, n, total) {
 function showMain(tab) {
   // Stop ALL playing audio when switching tabs
   var textMap = { kids: '▶ Sing Along!', basics: '▶ Listen & Learn!', khmer: '▶ Sing Along!' };
-  ['khmer','kids','basics'].forEach(function(type) {
+  ['khmer','kids'].forEach(function(type) {
     if (state[type] && state[type].playing) {
       clearInterval(state[type].timer);
       state[type].playing = false;
@@ -748,9 +769,9 @@ function showMain(tab) {
     }
   });
   if (kidsPlayer) kidsPlayer.pauseVideo();
-  if (basicsPlayer) basicsPlayer.pauseVideo();
 
-  var tabs = ['kids','basics','comedy','about'];
+
+  var tabs = ['kids','phrases','about'];
   tabs.forEach(function(t) {
     var panel = document.getElementById('panel-' + t);
     if (panel) panel.classList.toggle('visible', t === tab);
@@ -1009,8 +1030,6 @@ function setLang(lang) {
 }
 
 var kidsPlayer = null;
-var basicsPlayer = null;
-var pendingBasicsVideo = null;
 var pendingKidsVideo = null;
 
 function onYouTubeIframeAPIReady() {
@@ -1045,6 +1064,136 @@ function onYouTubeIframeAPIReady() {
     }
   });
   // Comedy player initialised lazily when tab is first opened
+}
+
+
+var phrases = {
+  greetings: [
+    { id:"PHR-GRT-001", english:"Hello", khmer:"សួស្តី", phonetic:"Soo-sday" },
+    { id:"PHR-GRT-002", english:"Goodbye", khmer:"លាហើយ", phonetic:"Lea hay" },
+    { id:"PHR-GRT-003", english:"Thank you", khmer:"អរគុណ", phonetic:"Or-koon" },
+    { id:"PHR-GRT-004", english:"Sorry / Excuse me", khmer:"សុំទោស", phonetic:"Som-toh" },
+    { id:"PHR-GRT-005", english:"Yes", khmer:"បាទ", phonetic:"Bart" },
+    { id:"PHR-GRT-006", english:"No", khmer:"អត់ទេ", phonetic:"Ot tay" },
+    { id:"PHR-GRT-007", english:"I don't understand", khmer:"ខ្ញុំមិនយល់ទេ", phonetic:"Kh-nyom min yohl tay" }
+  ],
+  food: [
+    { id:"PHR-FOO-001", english:"Water", khmer:"ទឹក", phonetic:"Teuk" },
+    { id:"PHR-FOO-002", english:"Beer", khmer:"ស្រាបៀរ", phonetic:"Sraa-beer" },
+    { id:"PHR-FOO-003", english:"Rice", khmer:"បាយ", phonetic:"Bai" },
+    { id:"PHR-FOO-004", english:"Soup", khmer:"សម្លរ", phonetic:"Samlor" },
+    { id:"PHR-FOO-005", english:"Delicious!", khmer:"ឆ្ងាញ់ណាស់!", phonetic:"Chh-nganh nas!" },
+    { id:"PHR-FOO-006", english:"Not spicy please", khmer:"សូមកុំហឹរ", phonetic:"Som kom heh" },
+    { id:"PHR-FOO-007", english:"The bill please", khmer:"សូមគិតលុយ", phonetic:"Som kit loo-y" },
+    { id:"PHR-FOO-008", english:"I'm hungry", khmer:"ខ្ញុំឃ្លាន", phonetic:"Kh-nyom khlean" },
+    { id:"PHR-FOO-009", english:"I'm thirsty", khmer:"ខ្ញុំស្រេកទឹក", phonetic:"Kh-nyom srek teuk" }
+  ],
+  transport: [
+    { id:"PHR-TRN-001", english:"Turn left", khmer:"បត់ឆ្វេង", phonetic:"Bot chh-veng" },
+    { id:"PHR-TRN-002", english:"Turn right", khmer:"បត់ស្តាំ", phonetic:"Bot sdam" },
+    { id:"PHR-TRN-003", english:"Stop here", khmer:"ឈប់ទីនេះ", phonetic:"Chhob ti nih" },
+    { id:"PHR-TRN-004", english:"How much?", khmer:"តម្លៃប៉ុន្មាន?", phonetic:"Domlai ponman?" },
+    { id:"PHR-TRN-005", english:"Where is it?", khmer:"នៅឯណា?", phonetic:"Now ae na?" },
+    { id:"PHR-TRN-006", english:"Too expensive", khmer:"ថ្លៃពេក", phonetic:"Thlay pek" }
+  ],
+  social: [
+    { id:"PHR-SOC-001", english:"What is your name?", khmer:"អ្នកឈ្មោះអ្វី?", phonetic:"Nak chh-moh ave?" },
+    { id:"PHR-SOC-002", english:"My name is...", khmer:"ខ្ញុំឈ្មោះ...", phonetic:"Kh-nyom chh-moh..." },
+    { id:"PHR-SOC-003", english:"You are beautiful", khmer:"អ្នកស្អាតណាស់", phonetic:"Nak sa-art nas" },
+    { id:"PHR-SOC-004", english:"How are you?", khmer:"សុខសប្បាយទេ?", phonetic:"Sok sabay te?" },
+    { id:"PHR-SOC-005", english:"I'm fine", khmer:"ខ្ញុំសុខសប្បាយ", phonetic:"Kh-nyom sok sabay" }
+  ],
+  numbers: [
+    { id:"PHR-NUM-001", english:"One — ១", khmer:"មួយ", phonetic:"Muoy" },
+    { id:"PHR-NUM-002", english:"Two — ២", khmer:"ពីរ", phonetic:"Pii" },
+    { id:"PHR-NUM-003", english:"Three — ៣", khmer:"បី", phonetic:"Bei" },
+    { id:"PHR-NUM-004", english:"Four — ៤", khmer:"បួន", phonetic:"Buon" },
+    { id:"PHR-NUM-005", english:"Five — ៥", khmer:"ប្រាំ", phonetic:"Pram" },
+    { id:"PHR-NUM-006", english:"Six — ៦", khmer:"ប្រាំមួយ", phonetic:"Pram muoy" },
+    { id:"PHR-NUM-007", english:"Seven — ៧", khmer:"ប្រាំពីរ", phonetic:"Pram pii" },
+    { id:"PHR-NUM-008", english:"Eight — ៨", khmer:"ប្រាំបី", phonetic:"Pram bei" },
+    { id:"PHR-NUM-009", english:"Nine — ៩", khmer:"ប្រាំបួន", phonetic:"Pram buon" },
+    { id:"PHR-NUM-010", english:"Ten — ១០", khmer:"ដប់", phonetic:"Dop" }
+  ],
+  days: [
+    { id:"PHR-DAY-001", english:"Monday", khmer:"ថ្ងៃចន្ទ", phonetic:"Tngai Chan" },
+    { id:"PHR-DAY-002", english:"Tuesday", khmer:"ថ្ងៃអង្គារ", phonetic:"Tngai Angkear" },
+    { id:"PHR-DAY-003", english:"Wednesday", khmer:"ថ្ងៃពុធ", phonetic:"Tngai Put" },
+    { id:"PHR-DAY-004", english:"Thursday", khmer:"ថ្ងៃព្រហស្បតិ៍", phonetic:"Tngai Prohoas" },
+    { id:"PHR-DAY-005", english:"Friday", khmer:"ថ្ងៃសុក្រ", phonetic:"Tngai Sok" },
+    { id:"PHR-DAY-006", english:"Saturday", khmer:"ថ្ងៃសៅរ៍", phonetic:"Tngai Sau" },
+    { id:"PHR-DAY-007", english:"Sunday", khmer:"ថ្ងៃអាទិត្យ", phonetic:"Tngai Artit" },
+    { id:"PHR-DAY-008", english:"Weekend", khmer:"ចុងសប្តាហ៍", phonetic:"Chong Sabda" }
+  ],
+  colours: [
+    { id:"PHR-COL-001", english:"Yellow", khmer:"ពោរលឿង", phonetic:"Por leung" },
+    { id:"PHR-COL-002", english:"Orange", khmer:"ពោរទឹកក្រូច", phonetic:"Por tuk krouch" },
+    { id:"PHR-COL-003", english:"Red", khmer:"ពោរក្រហម", phonetic:"Por krah-hahm" },
+    { id:"PHR-COL-004", english:"Pink", khmer:"ផ្កាឈូក", phonetic:"Phka chhuk" },
+    { id:"PHR-COL-005", english:"Green", khmer:"ពោរបៃតង", phonetic:"Por bai-tong" },
+    { id:"PHR-COL-006", english:"White", khmer:"ពោរស", phonetic:"Por so" },
+    { id:"PHR-COL-007", english:"Brown", khmer:"ពោរត្នោត", phonetic:"Por tnaot" },
+    { id:"PHR-COL-008", english:"Black", khmer:"ពោរខ្មៅ", phonetic:"Por khmao" }
+  ]
+};
+
+var currentCategory = null;
+var baseMediaURL = "https://raw.githubusercontent.com/Mickalacki/talktuktuk/main/";
+
+var catLabels = {
+  greetings:"👋 Greetings", food:"🍜 Food & Drink", transport:"🛺 Getting Around",
+  social:"🤝 Social", numbers:"🔢 Numbers", days:"📅 Days", colours:"🎨 Colours"
+};
+
+function openCategory(cat) {
+  currentCategory = cat;
+  document.getElementById('phrases-categories').style.display = 'none';
+  document.getElementById('phrase-player').style.display = 'none';
+  var list = document.getElementById('phrase-cards');
+  list.innerHTML = '';
+  var items = phrases[cat];
+  items.forEach(function(p) {
+    var div = document.createElement('div');
+    div.className = 'song-item';
+    div.innerHTML = '<div class="song-item-header"><div class="song-badge badge-kids" style="background:var(--yellow);font-size:14px;width:38px;height:38px;font-family:Khmer,sans-serif;">' + p.khmer.charAt(0) + '</div><div><div class="song-info-title">' + p.english + '</div><div class="song-info-sub">' + p.phonetic + '</div></div><div class="song-arrow">▶</div></div>';
+    div.onclick = function() { openPhrase(p); };
+    list.appendChild(div);
+  });
+  // Add back button at top
+  var back = document.createElement('div');
+  back.style = 'margin:12px 12px 4px;';
+  back.innerHTML = '<button class="player-back" style="background:rgba(255,255,255,0.15);color:white;border:none;border-radius:20px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;" onclick="closeCategory()">← Categories</button><div style="font-family:Fredoka One,cursive;font-size:18px;color:white;margin-top:8px;padding-left:4px;">' + catLabels[cat] + '</div>';
+  document.getElementById('phrases-list').insertBefore(back, list);
+  document.getElementById('phrases-list').style.display = 'block';
+}
+
+function closeCategory() {
+  document.getElementById('phrases-list').style.display = 'none';
+  document.getElementById('phrases-categories').style.display = 'block';
+  // Clear back button to avoid duplicates
+  var list = document.getElementById('phrases-list');
+  while (list.firstChild) list.removeChild(list.firstChild);
+  list.appendChild(document.getElementById('phrase-cards'));
+}
+
+function openPhrase(p) {
+  document.getElementById('phrases-list').style.display = 'none';
+  document.getElementById('phrase-player-title').textContent = p.english;
+  document.getElementById('phrase-khmer').textContent = p.khmer;
+  document.getElementById('phrase-english').textContent = p.english;
+  document.getElementById('phrase-phonetic').textContent = p.phonetic;
+  var video = document.getElementById('phrase-video');
+  document.getElementById('phrase-video-src').src = baseMediaURL + p.id + '.mp4';
+  video.load();
+  video.play();
+  document.getElementById('phrase-player').style.display = 'block';
+}
+
+function closePhrasePlayer() {
+  var video = document.getElementById('phrase-video');
+  video.pause();
+  document.getElementById('phrase-player').style.display = 'none';
+  document.getElementById('phrases-list').style.display = 'block';
 }
 
 </script>
