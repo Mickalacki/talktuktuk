@@ -282,7 +282,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
           <div class="song-item-header">
             <div class="song-badge badge-kids" style="background:#FFD600;font-size:22px;width:44px;height:44px;">👋</div>
             <div>
-              <div class="song-info-title">Greetings</div>
+              <div class="song-info-title">Greetings</div><div style="font-size:11px;color:#888;margin-top:1px;">ការស្វាគមន៍</div>
               <div class="song-info-sub">7 phrases · Hello, Thank you, Sorry...</div>
             </div>
             <div class="song-arrow">▶</div>
@@ -292,7 +292,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
           <div class="song-item-header">
             <div class="song-badge badge-kids" style="background:#FF8F00;font-size:22px;width:44px;height:44px;">🍜</div>
             <div>
-              <div class="song-info-title">Food &amp; Drink</div>
+              <div class="song-info-title">Food &amp; Drink</div><div style="font-size:11px;color:#888;margin-top:1px;">ម្ហូប និងភេសជ្ជៈ</div>
               <div class="song-info-sub">9 phrases · Water, Beer, Delicious...</div>
             </div>
             <div class="song-arrow">▶</div>
@@ -302,7 +302,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
           <div class="song-item-header">
             <div class="song-badge badge-kids" style="background:#1565C0;font-size:22px;width:44px;height:44px;">🛺</div>
             <div>
-              <div class="song-info-title">Getting Around</div>
+              <div class="song-info-title">Getting Around</div><div style="font-size:11px;color:#888;margin-top:1px;">ការធ្វើដំណើរ</div>
               <div class="song-info-sub">6 phrases · Turn left, Stop here...</div>
             </div>
             <div class="song-arrow">▶</div>
@@ -312,7 +312,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
           <div class="song-item-header">
             <div class="song-badge badge-kids" style="background:#2E7D32;font-size:22px;width:44px;height:44px;">🤝</div>
             <div>
-              <div class="song-info-title">Social</div>
+              <div class="song-info-title">Social</div><div style="font-size:11px;color:#888;margin-top:1px;">សង្គម</div>
               <div class="song-info-sub">5 phrases · What is your name...</div>
             </div>
             <div class="song-arrow">▶</div>
@@ -322,7 +322,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
           <div class="song-item-header">
             <div class="song-badge badge-kids" style="background:#6A1B9A;font-size:22px;width:44px;height:44px;">🔢</div>
             <div>
-              <div class="song-info-title">Numbers</div>
+              <div class="song-info-title">Numbers</div><div style="font-size:11px;color:#888;margin-top:1px;">លេខ</div>
               <div class="song-info-sub">10 phrases · 1 through 10</div>
             </div>
             <div class="song-arrow">▶</div>
@@ -332,7 +332,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
           <div class="song-item-header">
             <div class="song-badge badge-kids" style="background:#00838F;font-size:22px;width:44px;height:44px;">📅</div>
             <div>
-              <div class="song-info-title">Days</div>
+              <div class="song-info-title">Days</div><div style="font-size:11px;color:#888;margin-top:1px;">ថ្ងៃក្នុងសប្តាហ៍</div>
               <div class="song-info-sub">8 phrases · Monday to Sunday</div>
             </div>
             <div class="song-arrow">▶</div>
@@ -342,7 +342,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
           <div class="song-item-header">
             <div class="song-badge badge-kids" style="background:#AD1457;font-size:22px;width:44px;height:44px;">🎨</div>
             <div>
-              <div class="song-info-title">Colours</div>
+              <div class="song-info-title">Colours</div><div style="font-size:11px;color:#888;margin-top:1px;">ពណ៌</div>
               <div class="song-info-sub">8 phrases · Red, Blue, Green...</div>
             </div>
             <div class="song-arrow">▶</div>
@@ -352,7 +352,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
           <div class="song-item-header">
             <div class="song-badge badge-kids" style="background:#4CAF50;font-size:22px;width:44px;height:44px;">👶</div>
             <div>
-              <div class="song-info-title">Kids Songs</div>
+              <div class="song-info-title">Kids Songs</div><div style="font-size:11px;color:#888;margin-top:1px;">ចំរៀងកុមារ</div>
               <div class="song-info-sub">2 songs · Sing along in Khmer</div>
             </div>
             <div class="song-arrow">▶</div>
@@ -1169,7 +1169,11 @@ function openCategory(cat) {
   items.forEach(function(p) {
     var div = document.createElement('div');
     div.className = 'song-item';
-    div.innerHTML = '<div class="song-item-header"><div class="song-badge badge-kids" style="background:var(--yellow);font-size:14px;width:38px;height:38px;font-family:Khmer,sans-serif;">' + p.khmer.charAt(0) + '</div><div><div class="song-info-title">' + p.english + '</div><div class="song-info-sub">' + p.phonetic + '</div></div><div class="song-arrow">▶</div></div>';
+    var isEng = window.learningLang === 'english';
+    var primaryText = isEng ? p.english : p.english;
+    var secondaryText = isEng ? p.khmer : p.phonetic;
+    var badgeChar = isEng ? p.english.charAt(0) : p.khmer.charAt(0);
+    div.innerHTML = '<div class="song-item-header"><div class="song-badge badge-kids" style="background:var(--yellow);font-size:14px;width:38px;height:38px;font-family:Khmer,sans-serif;">' + badgeChar + '</div><div><div class="song-info-title">' + primaryText + '</div><div class="song-info-sub">' + secondaryText + '</div></div><div class="song-arrow">▶</div></div>';
     div.onclick = function() { openPhrase(p); };
     list.appendChild(div);
   });
@@ -1192,10 +1196,19 @@ function closeCategory() {
 
 function openPhrase(p) {
   document.getElementById('phrases-list').style.display = 'none';
-  document.getElementById('phrase-player-title').textContent = p.english;
-  document.getElementById('phrase-khmer').textContent = p.khmer;
-  document.getElementById('phrase-english').textContent = p.english;
-  document.getElementById('phrase-phonetic').textContent = p.phonetic;
+  var isEnglish = window.learningLang === 'english';
+  document.getElementById('phrase-player-title').textContent = isEnglish ? p.english : p.english;
+  if (isEnglish) {
+    document.getElementById('phrase-khmer').textContent = p.english;
+    document.getElementById('phrase-khmer').style.color = '#1565C0';
+    document.getElementById('phrase-english').textContent = p.khmer;
+    document.getElementById('phrase-phonetic').textContent = p.phonetic;
+  } else {
+    document.getElementById('phrase-khmer').textContent = p.khmer;
+    document.getElementById('phrase-khmer').style.color = '#1565C0';
+    document.getElementById('phrase-english').textContent = p.english;
+    document.getElementById('phrase-phonetic').textContent = p.phonetic;
+  }
   var video = document.getElementById('phrase-video');
   document.getElementById('phrase-video-src').src = baseMediaURL + p.id + '.mp4';
   video.load();
