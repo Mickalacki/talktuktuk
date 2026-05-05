@@ -785,13 +785,21 @@ function showMain(tab) {
   if (kidsPlayer) kidsPlayer.pauseVideo();
 
 
-  var tabs = ['kids','phrases','about'];
+  var tabs = ['phrases','about'];
   tabs.forEach(function(t) {
     var panel = document.getElementById('panel-' + t);
     if (panel) panel.classList.toggle('visible', t === tab);
     var btn = document.getElementById('mtab-' + t);
     if (btn) btn.classList.toggle('active', t === tab);
   });
+  // Reset phrases view when switching to phrases tab
+  if (tab === 'phrases') {
+    document.getElementById('phrases-categories').style.display = 'block';
+    document.getElementById('phrases-list').style.display = 'none';
+    document.getElementById('phrase-player').style.display = 'none';
+    var pv = document.getElementById('phrase-video');
+    if (pv) pv.pause();
+  }
 }
 
 function openPlayer(type, idx) {
