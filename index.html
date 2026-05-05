@@ -1337,7 +1337,11 @@ function selectQuizCat(btn) {
 function getAllPhrases() {
   var all = [];
   Object.keys(phrases).forEach(function(cat) {
-    phrases[cat].forEach(function(p) { all.push(Object.assign({}, p, {cat: cat})); });
+    phrases[cat].forEach(function(p) {
+      var copy = Object.assign({}, p);
+      copy.cat = cat;
+      all.push(copy);
+    });
   });
   return all;
 }
@@ -1352,7 +1356,12 @@ function shuffle(arr) {
 }
 
 function startQuiz() {
-  var pool = quizSelectedCat === 'all' ? getAllPhrases() : phrases[quizSelectedCat].map(function(p) { return Object.assign({}, p, {cat: quizSelectedCat}); });
+  var pool;
+  if (quizSelectedCat === 'all') {
+    pool = getAllPhrases();
+  } else {
+    pool = phrases[quizSelectedCat].map(function(p) { return Object.assign({}, p, {cat: quizSelectedCat}); });
+  }
   quizQuestions = shuffle(pool).slice(0, Math.min(10, pool.length));
   quizCurrentIdx = 0;
   quizScore = 0;
@@ -1365,22 +1374,30 @@ function startQuiz() {
 function showQuestion() {
   quizAnswered = false;
   var q = quizQuestions[quizCurrentIdx];
-  var isEng = window.learningLang === 'english';
   var total = quizQuestions.length;
 
   document.getElementById('quiz-progress-bar').style.width = ((quizCurrentIdx / total) * 100) + '%';
   document.getElementById('quiz-q-num').textContent = 'Question ' + (quizCurrentIdx + 1) + ' of ' + total;
   document.getElementById('quiz-next-wrap').style.display = 'none';
 
-  // Question: show Khmer script, ask for English translation
   document.getElementById('quiz-q-text').textContent = q.khmer;
   document.getElementById('quiz-q-sub').textContent = q.phonetic;
 
-  // Generate 4 options - 1 correct + 3 random wrong
-  var allPool = getAllPhrases().filter(function(p) { return p.id !== q.id; });
-  var wrong = shuffle(allPool).slice(0, 3);
-  var options = shuffle([q].concat(wrong));
+  // Wrong answers come from SAME category for single category quiz
+  // For all categories, wrong answers come from same category as correct answer
+  var qCat = q.cat || quizSelectedCat;
+  var samePool = phrases[qCat] ? phrases[qCat].filter(function(p) { return p.id !== q.id; }) : [];
+  
+  // If not enough in same category, pad with other categories
+  var wrongPool = shuffle(samePool);
+  if (wrongPool.length < 3) {
+    var otherPool = getAllPhrases().filter(function(p) { return p.id !== q.id && p.cat !== qCat; });
+    wrongPool = wrongPool.concat(shuffle(otherPool)).slice(0, 3);
+  } else {
+    wrongPool = wrongPool.slice(0, 3);
+  }
 
+  var options = shuffle([q].concat(wrongPool));
   var container = document.getElementById('quiz-options');
   container.innerHTML = '';
   options.forEach(function(opt) {
