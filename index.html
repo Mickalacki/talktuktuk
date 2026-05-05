@@ -1387,28 +1387,23 @@ function showQuestion() {
     var btn = document.createElement('button');
     btn.className = 'quiz-opt';
     btn.textContent = opt.english;
-    btn.onclick = function() { answerQuestion(btn, opt.id === q.id, q.id); };
+    btn.onclick = (function(b, correct, correctEng) { return function() { answerQuestion(b, correct, correctEng); }; })(btn, opt.id === q.id, q.english);
     container.appendChild(btn);
   });
 }
 
-function answerQuestion(btn, isCorrect, correctId) {
+function answerQuestion(btn, isCorrect, correctEnglish) {
   if (quizAnswered) return;
   quizAnswered = true;
-
-  // Disable all buttons
-  document.querySelectorAll('.quiz-opt').forEach(function(b) { b.classList.add('disabled'); b.onclick = null; });
-
+  var opts = document.querySelectorAll('.quiz-opt');
+  opts.forEach(function(b) { b.classList.add('disabled'); b.onclick = null; });
   if (isCorrect) {
     btn.classList.add('correct');
     quizScore++;
   } else {
     btn.classList.add('wrong');
-    // Reveal correct answer
-    document.querySelectorAll('.quiz-opt').forEach(function(b) {
-      var allPool = getAllPhrases();
-      var correctPhrase = getAllPhrases().find(function(p) { return p.id === correctId; });
-      if (correctPhrase && b.textContent === correctPhrase.english) b.classList.add('reveal');
+    opts.forEach(function(b) {
+      if (b.textContent === correctEnglish) b.classList.add('reveal');
     });
   }
   document.getElementById('quiz-next-wrap').style.display = 'block';
@@ -1430,7 +1425,7 @@ function showScore() {
   var pct = Math.round((quizScore / total) * 100);
   document.getElementById('quiz-score-num').textContent = quizScore + ' / ' + total;
   var emoji = pct === 100 ? '🏆' : pct >= 70 ? '🎉' : pct >= 40 ? '👍' : '💪';
-  var label = pct === 100 ? 'Perfect score! Amazing!' : pct >= 70 ? 'Great work! Keep it up!' : pct >= 40 ? 'Good effort! Keep practising!' : 'Keep going — you'll get there!';
+  var label = pct === 100 ? 'Perfect score! Amazing!' : pct >= 70 ? 'Great work! Keep it up!' : pct >= 40 ? 'Good effort! Keep practising!' : 'Keep going — you will get there!';
   document.getElementById('quiz-score-emoji').textContent = emoji;
   document.getElementById('quiz-score-label').textContent = label;
   document.getElementById('quiz-progress-bar').style.width = '100%';
