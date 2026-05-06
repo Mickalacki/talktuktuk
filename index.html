@@ -430,7 +430,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
           <button class="quiz-cat-btn" data-cat="days" onclick="selectQuizCat(this)">📅 Days</button>
           <button class="quiz-cat-btn" data-cat="colours" onclick="selectQuizCat(this)">🎨 Colours</button>
         </div>
-        <button class="btn-quiz-start" onclick="startQuiz()">▶ Start Quiz!</button>
+
       </div>
     </div>
 
@@ -1332,6 +1332,7 @@ function selectQuizCat(btn) {
   document.querySelectorAll('.quiz-cat-btn').forEach(function(b) { b.classList.remove('selected'); });
   btn.classList.add('selected');
   quizSelectedCat = btn.getAttribute('data-cat');
+  startQuiz();
 }
 
 function getAllPhrases() {
@@ -1383,18 +1384,22 @@ function showQuestion() {
   document.getElementById('quiz-q-text').textContent = q.khmer;
   document.getElementById('quiz-q-sub').textContent = q.phonetic;
 
-  // Wrong answers come from SAME category for single category quiz
-  // For all categories, wrong answers come from same category as correct answer
   var qCat = q.cat || quizSelectedCat;
-  var samePool = phrases[qCat] ? phrases[qCat].filter(function(p) { return p.id !== q.id; }) : [];
-  
-  // If not enough in same category, pad with other categories
-  var wrongPool = shuffle(samePool);
-  if (wrongPool.length < 3) {
+  var wrongPool;
+  if (quizSelectedCat === 'all') {
+    // All categories: wrong answers from DIFFERENT categories - more interesting!
     var otherPool = getAllPhrases().filter(function(p) { return p.id !== q.id && p.cat !== qCat; });
-    wrongPool = wrongPool.concat(shuffle(otherPool)).slice(0, 3);
+    wrongPool = shuffle(otherPool).slice(0, 3);
   } else {
-    wrongPool = wrongPool.slice(0, 3);
+    // Single category: wrong answers from SAME category - harder!
+    var samePool = phrases[qCat] ? phrases[qCat].filter(function(p) { return p.id !== q.id; }) : [];
+    wrongPool = shuffle(samePool);
+    if (wrongPool.length < 3) {
+      var padPool = getAllPhrases().filter(function(p) { return p.id !== q.id && p.cat !== qCat; });
+      wrongPool = wrongPool.concat(shuffle(padPool)).slice(0, 3);
+    } else {
+      wrongPool = wrongPool.slice(0, 3);
+    }
   }
 
   var options = shuffle([q].concat(wrongPool));
