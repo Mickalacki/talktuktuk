@@ -1180,75 +1180,7 @@ function onYouTubeIframeAPIReady() {
 
 
 var phrases = {}; // loaded dynamically
-var phrases_static = {
-  greetings: [
-    { id:"PHR-GRT-001", english:"Hello", khmer:"សួស្តី", phonetic:"Soo-sday" },
-    { id:"PHR-GRT-002", english:"Goodbye", khmer:"លាហើយ", phonetic:"Lea hay" },
-    { id:"PHR-GRT-003", english:"Thank you", khmer:"អរគុណ", phonetic:"Or-koon" },
-    { id:"PHR-GRT-004", english:"Sorry / Excuse me", khmer:"សុំទោស", phonetic:"Som-toh" },
-    { id:"PHR-GRT-005", english:"Yes", khmer:"បាទ", phonetic:"Bart" },
-    { id:"PHR-GRT-006", english:"No", khmer:"អត់ទេ", phonetic:"Ot tay" },
-    { id:"PHR-GRT-007", english:"I don't understand", khmer:"ខ្ញុំមិនយល់ទេ", phonetic:"Kh-nyom min yohl tay" }
-  ],
-  food: [
-    { id:"PHR-FOO-001", english:"Water", khmer:"ទឹក", phonetic:"Teuk" },
-    { id:"PHR-FOO-002", english:"Beer", khmer:"ស្រាបៀរ", phonetic:"Sraa-beer" },
-    { id:"PHR-FOO-003", english:"Rice", khmer:"បាយ", phonetic:"Bai" },
-    { id:"PHR-FOO-004", english:"Soup", khmer:"សម្លរ", phonetic:"Samlor" },
-    { id:"PHR-FOO-005", english:"Delicious!", khmer:"ឆ្ងាញ់ណាស់!", phonetic:"Chh-nganh nas!" },
-    { id:"PHR-FOO-006", english:"Not spicy please", khmer:"សូមកុំហឹរ", phonetic:"Som kom heh" },
-    { id:"PHR-FOO-007", english:"The bill please", khmer:"សូមគិតលុយ", phonetic:"Som kit loo-y" },
-    { id:"PHR-FOO-008", english:"I'm hungry", khmer:"ខ្ញុំឃ្លាន", phonetic:"Kh-nyom khlean" },
-    { id:"PHR-FOO-009", english:"I'm thirsty", khmer:"ខ្ញុំស្រេកទឹក", phonetic:"Kh-nyom srek teuk" }
-  ],
-  transport: [
-    { id:"PHR-TRN-001", english:"Turn left", khmer:"បត់ឆ្វេង", phonetic:"Bot chh-veng" },
-    { id:"PHR-TRN-002", english:"Turn right", khmer:"បត់ស្តាំ", phonetic:"Bot sdam" },
-    { id:"PHR-TRN-003", english:"Stop here", khmer:"ឈប់ទីនេះ", phonetic:"Chhob ti nih" },
-    { id:"PHR-TRN-004", english:"How much?", khmer:"តម្លៃប៉ុន្មាន?", phonetic:"Domlai ponman?" },
-    { id:"PHR-TRN-005", english:"Where is it?", khmer:"នៅឯណា?", phonetic:"Now ae na?" },
-    { id:"PHR-TRN-006", english:"Too expensive", khmer:"ថ្លៃពេក", phonetic:"Thlay pek" }
-  ],
-  social: [
-    { id:"PHR-SOC-001", english:"What is your name?", khmer:"អ្នកឈ្មោះអ្វី?", phonetic:"Nak chh-moh ave?" },
-    { id:"PHR-SOC-002", english:"My name is...", khmer:"ខ្ញុំឈ្មោះ...", phonetic:"Kh-nyom chh-moh..." },
-    { id:"PHR-SOC-003", english:"You are beautiful", khmer:"អ្នកស្អាតណាស់", phonetic:"Nak sa-art nas" },
-    { id:"PHR-SOC-004", english:"How are you?", khmer:"សុខសប្បាយទេ?", phonetic:"Sok sabay te?" },
-    { id:"PHR-SOC-005", english:"I'm fine", khmer:"ខ្ញុំសុខសប្បាយ", phonetic:"Kh-nyom sok sabay" }
-  ],
-  numbers: [
-    { id:"PHR-NUM-001", english:"One — ១", khmer:"មួយ", phonetic:"Muoy" },
-    { id:"PHR-NUM-002", english:"Two — ២", khmer:"ពីរ", phonetic:"Pii" },
-    { id:"PHR-NUM-003", english:"Three — ៣", khmer:"បី", phonetic:"Bei" },
-    { id:"PHR-NUM-004", english:"Four — ៤", khmer:"បួន", phonetic:"Buon" },
-    { id:"PHR-NUM-005", english:"Five — ៥", khmer:"ប្រាំ", phonetic:"Pram" },
-    { id:"PHR-NUM-006", english:"Six — ៦", khmer:"ប្រាំមួយ", phonetic:"Pram muoy" },
-    { id:"PHR-NUM-007", english:"Seven — ៧", khmer:"ប្រាំពីរ", phonetic:"Pram pii" },
-    { id:"PHR-NUM-008", english:"Eight — ៨", khmer:"ប្រាំបី", phonetic:"Pram bei" },
-    { id:"PHR-NUM-009", english:"Nine — ៩", khmer:"ប្រាំបួន", phonetic:"Pram buon" },
-    { id:"PHR-NUM-010", english:"Ten — ១០", khmer:"ដប់", phonetic:"Dop" }
-  ],
-  days: [
-    { id:"PHR-DAY-001", english:"Monday", khmer:"ថ្ងៃចន្ទ", phonetic:"Tngai Chan" },
-    { id:"PHR-DAY-002", english:"Tuesday", khmer:"ថ្ងៃអង្គារ", phonetic:"Tngai Angkear" },
-    { id:"PHR-DAY-003", english:"Wednesday", khmer:"ថ្ងៃពុធ", phonetic:"Tngai Put" },
-    { id:"PHR-DAY-004", english:"Thursday", khmer:"ថ្ងៃព្រហស្បតិ៍", phonetic:"Tngai Prohoas" },
-    { id:"PHR-DAY-005", english:"Friday", khmer:"ថ្ងៃសុក្រ", phonetic:"Tngai Sok" },
-    { id:"PHR-DAY-006", english:"Saturday", khmer:"ថ្ងៃសៅរ៍", phonetic:"Tngai Sau" },
-    { id:"PHR-DAY-007", english:"Sunday", khmer:"ថ្ងៃអាទិត្យ", phonetic:"Tngai Artit" },
-    { id:"PHR-DAY-008", english:"Weekend", khmer:"ចុងសប្តាហ៍", phonetic:"Chong Sabda" }
-  ],
-  colours: [
-    { id:"PHR-COL-001", english:"Yellow", khmer:"ពោរលឿង", phonetic:"Por leung" },
-    { id:"PHR-COL-002", english:"Orange", khmer:"ពោរទឹកក្រូច", phonetic:"Por tuk krouch" },
-    { id:"PHR-COL-003", english:"Red", khmer:"ពោរក្រហម", phonetic:"Por krah-hahm" },
-    { id:"PHR-COL-004", english:"Pink", khmer:"ផ្កាឈូក", phonetic:"Phka chhuk" },
-    { id:"PHR-COL-005", english:"Green", khmer:"ពោរបៃតង", phonetic:"Por bai-tong" },
-    { id:"PHR-COL-006", english:"White", khmer:"ពោរស", phonetic:"Por so" },
-    { id:"PHR-COL-007", english:"Brown", khmer:"ពោរត្នោត", phonetic:"Por tnaot" },
-    { id:"PHR-COL-008", english:"Black", khmer:"ពោរខ្មៅ", phonetic:"Por khmao" }
-  ]
-};
+// phrase data loaded from Google Sheets
 
 var currentCategory = null;
 var baseMediaURL = "https://raw.githubusercontent.com/Mickalacki/talktuktuk/main/";
@@ -1504,9 +1436,9 @@ function loadPhrases() {
           }
         })
         .catch(function(err2) {
-          console.warn('Proxy also failed, using built-in:', err2.message);
-          phrases = phrases_static;
-          initApp('Built-in data (offline)');
+          console.warn('All fetch attempts failed:', err2.message);
+          phrases = {};
+          document.getElementById('loading-screen').innerHTML = '<div style="text-align:center;padding:20px;color:white;"><div style="font-size:48px;margin-bottom:16px;">⚠️</div><div style="font-family:Fredoka One,cursive;font-size:22px;margin-bottom:12px;">Could not load phrases</div><div style="font-size:14px;opacity:0.7;margin-bottom:20px;">Please check your internet connection and try again.</div><button onclick="location.reload()" style="background:var(--yellow);border:none;border-radius:30px;padding:12px 28px;font-family:Fredoka One,cursive;font-size:18px;cursor:pointer;">Try Again</button></div>';
         });
     });
 }
@@ -1514,11 +1446,6 @@ function loadPhrases() {
 function initApp(source) {
   document.getElementById('loading-screen').style.display = 'none';
   updateCategoryCounts();
-  // Show data source in footer for debugging
-  var footer = document.querySelector('.footer');
-  if (footer && source) {
-    footer.innerHTML += '<br><span style="font-size:9px;opacity:0.4;">Data: ' + source + '</span>';
-  }
   document.getElementById('lang-overlay').style.display = 'flex';
 }
 
