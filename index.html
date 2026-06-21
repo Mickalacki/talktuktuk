@@ -47,9 +47,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
 .main-tab.t-kids.active { background: #69F0AE; }
 .main-tab.t-comedy.active { background: #FF80AB; }
 .main-tab.t-about.active { background: #80D8FF; }
-.main-nav .t-premium.active {
-  background: linear-gradient(135deg,#FFD700,#FFA500);
-  color: white; }
+
 /* SECTION PANELS */
 .panel { display: none; }
 .panel.visible { display: block; }
@@ -192,34 +190,12 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
 
 <div class="app">
 
-<div class="header">
-
-  <!-- LEFT: LOGO -->
-  <img src="https://raw.githubusercontent.com/Mickalacki/talktuktuk/main/NEW_TTT_LOGO.png" 
-       style="width:70px;height:70px;border-radius:50%;object-fit:cover;flex-shrink:0;" 
-       alt="Talk Tuk Tuk">
-
-  <!-- CENTER: TITLE -->
-  <div style="flex:1;text-align:center;">
-    <div class="header-title">TALK TUK TUK</div>
-    <div class="header-sub">Learn Basic Khmer Quickly!</div>
-  </div>
-
-  <!-- RIGHT: KHMER FLAG -->
-  <img src="KHMER-FLAG-LOGO.png" 
-      style="width:50px;height:36px;object-fit:cover;border-radius:4px;flex-shrink:0;" 
-       alt="Khmer Flag">
-
-</div>
-
-  <div class="charity-banner">
-    20% of app profits support Cambodian charities &mdash;
-    <a href="#" onclick="showMain('about'); return false;">Find out more</a>
-  </div>
-
-  <div class="donate-wrap">
-    <a class="btn-donate" href="PAYPAL_LINK_HERE" target="_blank">❤️ Donate</a>
-    <div class="donate-note">100% of donations go directly to Cambodian charities</div>
+  <div class="header">
+    <img src="https://raw.githubusercontent.com/Mickalacki/talktuktuk/main/NEW_TTT_LOGO.png" style="width:56px;height:56px;border-radius:50%;object-fit:cover;flex-shrink:0;" alt="Talk Tuk Tuk">
+    <div>
+      <div class="header-title">TALK TUK TUK</div>
+      <div class="header-sub">Learn Basic Khmer Quickly!</div>
+    </div>
   </div>
 
   <div class="lang-badge" onclick="document.getElementById('lang-overlay').style.display='flex'">
@@ -231,7 +207,6 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
   <div class="main-nav">
     <button class="main-tab t-khmer active" id="mtab-phrases" onclick="showMain('phrases')">🗣️<br>Phrases</button>
     <button class="main-tab t-kids" id="mtab-quiz" onclick="showMain('quiz')">🎯<br>Quiz</button>
-    <button class="main-tab t-premium" id="mtab-premium" onclick="showMain('premium')">⭐<br>Premium</button>
     <button class="main-tab t-about" id="mtab-about" onclick="showMain('about')">❤️<br>About</button>
   </div>
 
@@ -329,7 +304,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
           <div class="song-item-header">
             <div class="song-badge badge-kids" style="background:#FFD600;font-size:22px;width:44px;height:44px;">👋</div>
             <div>
-              <div class="song-info-title">Start &amp; Simple Talk</div><div style="font-size:11px;color:#888;margin-top:1px;">ការនិយាយសាមញ្ញៗ</div>
+              <div class="song-info-title">Start &amp; Simple Talk</div><div style="font-size:11px;color:#888;margin-top:1px;">Start &amp; Simple Talk</div>
               <div class="song-info-sub"><span id="cat-sub-greetings">7 phrases · Hello, Thank you, Sorry...</span></div>
             </div>
             <div class="song-arrow">▶</div>
@@ -395,7 +370,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
             <div class="song-arrow">▶</div>
           </div>
         </div>
-        <div class="song-item" onclick="openKidsSongs()" style="display:none;">
+        <div class="song-item" onclick="openKidsSongs()">
           <div class="song-item-header">
             <div class="song-badge badge-kids" style="background:#4CAF50;font-size:22px;width:44px;height:44px;">👶</div>
             <div>
@@ -486,73 +461,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
     </div>
 
   </div>
-<div class="panel" id="panel-premium">
-  <div style="margin:14px 12px 0;background:white;border-radius:16px;padding:36px 18px;text-align:center;">
 
-    <div style="font-size:56px;margin-bottom:16px;">
-      ⭐
-    </div>
-
-    <div style="font-family:Fredoka One,cursive;font-size:28px;color:#B8860B;margin-bottom:12px;">
-      Premium Coming Soon
-    </div>
-
-    <div style="font-size:15px;color:#555;line-height:1.7;margin-bottom:24px;">
-      More phrases, audio and quizzes coming soon.
-      <br><br>
-      Learn Khmer faster with premium visual lessons and extra quiz packs.
-    </div>
-<div style="margin-top:24px;text-align:left;background:#FFF8DC;padding:16px;border-radius:12px;">
-
-  <div style="font-weight:bold;margin-bottom:10px;font-size:16px;">
-    ⭐ Planned Premium Features
-  </div>
-<div style="margin:14px 12px 0;display:flex;flex-direction:column;gap:10px;">
-
-  <div style="background:white;border-radius:14px;padding:16px 18px;box-shadow:0 3px 16px rgba(0,0,0,0.12);display:flex;align-items:center;gap:14px;opacity:0.85;">
-    <div style="font-size:28px;flex-shrink:0;">🔒</div>
-    <div>
-      <div style="font-family:Fredoka One,cursive;font-size:17px;color:#1a1a2e;">Survival Khmer Pack</div>
-      <div style="font-size:12px;color:#777;margin-top:3px;">Essential Cambodia phrases for transport, food and emergencies.</div>
-    </div>
-    <div style="margin-left:auto;background:#FFD700;color:#1a1a2e;border-radius:20px;padding:6px 14px;font-size:11px;font-weight:700;flex-shrink:0;">SOON</div>
-  </div>
-
-  <div style="background:white;border-radius:14px;padding:16px 18px;box-shadow:0 3px 16px rgba(0,0,0,0.12);display:flex;align-items:center;gap:14px;opacity:0.85;">
-    <div style="font-size:28px;flex-shrink:0;">🔒</div>
-    <div>
-      <div style="font-family:Fredoka One,cursive;font-size:17px;color:#1a1a2e;">Bar &amp; Nightlife Pack</div>
-      <div style="font-size:12px;color:#777;margin-top:3px;">Fun social phrases, drinks, flirting and nightlife Khmer.</div>
-    </div>
-    <div style="margin-left:auto;background:#FFD700;color:#1a1a2e;border-radius:20px;padding:6px 14px;font-size:11px;font-weight:700;flex-shrink:0;">SOON</div>
-  </div>
-
-  <div style="background:white;border-radius:14px;padding:16px 18px;box-shadow:0 3px 16px rgba(0,0,0,0.12);display:flex;align-items:center;gap:14px;opacity:0.85;">
-    <div style="font-size:28px;flex-shrink:0;">🔒</div>
-    <div>
-      <div style="font-family:Fredoka One,cursive;font-size:17px;color:#1a1a2e;">Bargaining Pack</div>
-      <div style="font-size:12px;color:#777;margin-top:3px;">Learn how to negotiate prices confidently in Cambodia.</div>
-    </div>
-    <div style="margin-left:auto;background:#FFD700;color:#1a1a2e;border-radius:20px;padding:6px 14px;font-size:11px;font-weight:700;flex-shrink:0;">SOON</div>
-  </div>
-
-</div>
-  <div style="line-height:1.8;font-size:14px;color:#444;">
-    ✅ Extra survival phrases<br>
-    ✅ Cheeky Khmer phrases<br>
-    ✅ Premium audio lessons<br>
-    ✅ Advanced quiz packs<br>
-    ✅ Tourist situation packs<br>
-    ✅ Offline learning
-  </div>
-
-</div>
-    <div style="background:#FFF8DC;padding:14px;border-radius:12px;font-size:14px;color:#444;">
-      🚧 Premium content currently under construction
-    </div>
-
-  </div>
-</div>
   <!-- ABOUT -->
 
   <div class="panel" id="panel-about">
@@ -560,15 +469,14 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
       <div style="text-align:center;margin-bottom:16px;">
         <img src="https://raw.githubusercontent.com/Mickalacki/talktuktuk/main/NEW_TTT_LOGO.png" style="width:100px;height:100px;border-radius:50%;object-fit:cover;" alt="Talk Tuk Tuk">
       </div>
-      <div class="about-title" style="text-align:center;">
-  About Talk Tuk Tuk
-</div>
+      <div class="about-title">About Talk Tuk Tuk</div>
       <p class="about-text">Talk Tuk Tuk helps tourists, expats and Cambodians connect through language. Learn basic Khmer phrases quickly — or practise your English — with short video clips of real words and phrases used every day in Cambodia.</p>
       <p class="about-text">No boring lessons. No textbooks. Just pick a category, watch a short clip, and start talking. Whether you're haggling at the market, ordering food, or just want to make your tuk tuk driver smile — Talk Tuk Tuk has you covered.</p>
       <div class="giving-badge">
-        <span class="pct">20%</span>
-        of app profits go directly to Cambodian charities
+        <span class="pct">100%</span>
+        of donations go directly to Cambodian charities
       </div>
+      <p class="about-text" style="text-align:center;font-size:13px;color:#888;margin-top:-8px;">Plus 20% of all Premium profits also go to our charity partners.</p>
       <div class="donate-wrap" style="margin: 0 0 18px;">
         <a class="btn-donate" href="PAYPAL_LINK_HERE" target="_blank">❤️ Donate Now</a>
         <div class="donate-note" style="color:#888;">Every dollar helps Cambodian children and families</div>
@@ -952,7 +860,7 @@ function showMain(tab) {
   if (kidsPlayer) kidsPlayer.pauseVideo();
 
 
-var tabs = ['phrases','quiz','premium','about'];
+  var tabs = ['phrases','quiz','about'];
   tabs.forEach(function(t) {
     var panel = document.getElementById('panel-' + t);
     if (panel) panel.classList.toggle('visible', t === tab);
@@ -1417,8 +1325,7 @@ function backToKidsSongsList() {
 
 var CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQm2y2b_Jnxuu_PUxIpFGlI4-jIvfdoQxSidqSUMDJ6PK9EQAFRXLB9ybl8lUjFgwWoBgvBdImTx4wZ/pub?gid=465524934&single=true&output=csv';
 var baseMediaURL = 'https://raw.githubusercontent.com/Mickalacki/talktuktuk/main/';
-var PREMIUM_CSV_URL = 'https://docs.google.com/spreadsheets/d/1r0zUrrBSaQMlnYqFl3ezz8_U3wq7w_sDTrK8j7Wuc2Q/export?format=csv&gid=0';
-var PREMIUM_AUDIO_BASE = 'https://raw.githubusercontent.com/Mickalacki/talktuktuk-premium/main/';
+
 function parseCSVLine(line) {
   var fields = [];
   var current = '';
@@ -1554,7 +1461,7 @@ function updateCategoryCounts() {
 
 // Start loading
 loadPhrases();
-loadPremiumPhrases();
+
 // ===== QUIZ =====
 var quizSelectedCat = 'all';
 var quizQuestions = [];
