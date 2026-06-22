@@ -1460,7 +1460,21 @@ function parseCSV(csv) {
   }
   return rows;
 }
-
+function loadPremiumPhrases() {
+  fetch(PREMIUM_CSV_URL)
+    .then(function(r) {
+      if (!r.ok) throw new Error('Premium CSV failed');
+      return r.text();
+    })
+    .then(function(csv) {
+      var rows = parseCSV(csv);
+      premiumPhrases = buildPhrasesFromCSV(rows);
+      console.log('Premium loaded');
+    })
+    .catch(function(err) {
+      console.warn('Premium load failed:', err.message);
+    });
+}
 function buildPhrasesFromCSV(rows) {
   var built = {};
   // Map all possible category names from the sheet
