@@ -1458,17 +1458,19 @@ function buildPhrasesFromCSV(rows) {
   var built = {};
   // Map all possible category names from the sheet
   var catMap = {
-    'Greetings': 'greetings', 'greetings': 'greetings',
-    'Food & Drink': 'food', 'Food': 'food', 'food': 'food',
-    'Getting Around': 'transport', 'Transport': 'transport', 'transport': 'transport',
-    'Social': 'social', 'social': 'social',
-    'Numbers': 'numbers', 'numbers': 'numbers',
-    'Days': 'days', 'days': 'days',
-    'Colours': 'colours', 'Colors': 'colours', 'colours': 'colours'
-    'Fun Phrases': 'funphrases',
+   'Greetings': 'greetings', 'greetings': 'greetings',
+'Food & Drink': 'food', 'Food': 'food', 'food': 'food',
+'Getting Around': 'transport', 'Transport': 'transport', 'transport': 'transport',
+'Social': 'social', 'social': 'social',
+'Numbers': 'numbers', 'numbers': 'numbers',
+'Days': 'days', 'days': 'days',
+
+'Colours': 'colours', 'Colors': 'colours', 'colours': 'colours',
+
+'Fun Phrases': 'funphrases',
 'fun phrases': 'funphrases',
-'funphrases': 'funphrases',
-  };
+'funphrases': 'funphrases'
+};
   rows.forEach(function(row) {
     if (!row.PhraseID || !row.English) return;
     var rawCat = (row.Category || '').trim();
