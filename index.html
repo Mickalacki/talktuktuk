@@ -1424,6 +1424,8 @@ var CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQm2y2b_Jnxuu_PUx
 var baseMediaURL = 'https://raw.githubusercontent.com/Mickalacki/talktuktuk/main/';
 var PREMIUM_CSV_URL = 'https://docs.google.com/spreadsheets/d/1r0zUrrBSaQMlnYqFl3ezz8_U3wq7w_sDTrK8j7Wuc2Q/export?format=csv&gid=0';
 var PREMIUM_AUDIO_BASE = 'https://raw.githubusercontent.com/Mickalacki/talktuktuk-premium/main/';
+  var SHOW_PREMIUM = false;
+var premiumPhrases = {};
 function parseCSVLine(line) {
   var fields = [];
   var current = '';
