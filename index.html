@@ -1274,6 +1274,11 @@ var catLabels = {
 };
 
 function openCategory(cat) {
+  // 🔒 PREMIUM LOCK
+  if (cat === 'funphrases' && !SHOW_PREMIUM) {
+    alert('🔒 Premium locked');
+    return;
+  }
   currentCategory = cat;
   document.getElementById('phrases-categories').style.display = 'none';
   document.getElementById('phrase-player').style.display = 'none';
