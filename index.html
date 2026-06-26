@@ -1468,6 +1468,7 @@ function loadPremiumPhrases() {
     })
     .then(function(csv) {
       var rows = parseCSV(csv);
+      console.log('RAW CSV ROWS:', rows.length);
       console.log('RAW ROW COUNT:', rows.length);
 
       premiumPhrases = buildPhrasesFromCSV(rows);
