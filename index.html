@@ -1519,17 +1519,25 @@ function loadPhrases() {
       return r.text();
     })
     .then(function(csv) {
-      var rows = parseCSV(csv);
-      var loaded = buildPhrasesFromCSV(rows);
-      // Only use if we got actual data
-      if (Object.keys(loaded).length > 0) {
-        phrases = loaded;
-        var total = Object.values(loaded).reduce(function(a,b){return a+b.length;},0);
-        console.log('Loaded ' + total + ' phrases from Google Sheets');
-        initApp('Google Sheets live (' + total + ' phrases)');
-      } else {
-        throw new Error('No phrases parsed');
-      }
+    var rows = parseCSV(csv);
+var loaded = buildPhrasesFromCSV(rows);
+
+/* 🔍 ADD THIS BLOCK RIGHT HERE */
+console.log('ROWS FROM CSV:', rows.length);
+console.log('CATEGORY KEYS:', Object.keys(loaded));
+console.log('CATEGORY BREAKDOWN:', Object.keys(loaded).map(function(k){
+  return k + ':' + loaded[k].length;
+}));
+
+// Only use if we got actual data
+if (Object.keys(loaded).length > 0) {
+  phrases = loaded;
+  var total = Object.values(loaded).reduce(function(a,b){return a+b.length;},0);
+  console.log('Loaded ' + total + ' phrases from Google Sheets');
+  initApp('Google Sheets live (' + total + ' phrases)');
+} else {
+  throw new Error('No phrases parsed');
+}
     })
     .catch(function(err) {
       console.warn('CSV load failed:', err.message);
