@@ -1466,17 +1466,77 @@ function loadPremiumPhrases() {
       return r.text();
     })
     .then(function(csv) {
-      var rows = parseCSV(csv);
-      console.log('RAW CSV ROWS:', rows.length);
-      console.log('RAW ROW COUNT:', rows.length);
 
-      premiumPhrases = buildPhrasesFromCSV(rows);
-      console.log('Premium loaded');
+      var rows = parseCSV(csv);
+
+      console.log('PREMIUM RAW CSV ROWS:', rows.length);
+
+      var premiumCatMap = {
+        'Nightlife & Bar Survival': 'bar',
+        'Meeting People': 'meeting',
+        'Shopping & Bargaining': 'shopping',
+        'Days & Time': 'days',
+        'Useful Extras': 'extras',
+        'Emergency & Health': 'emergency',
+        'Expressions & Slang': 'slang',
+        'Food & Drink Pro': 'foodpro',
+        'Weather & Nature': 'weather',
+        'People & Relationships': 'relationships',
+        'Linking words': 'linking',
+        'Exercise': 'exercise',
+        'Colours': 'colours'
+      };
+
+      var built = {};
+
+      rows.forEach(function(row) {
+
+        if (!row.PhraseID || !row.English) return;
+
+        var rawCat = (row.Category || '').trim();
+        var cat = premiumCatMap[rawCat];
+
+        if (!cat) return;
+
+        if (!built[cat]) {
+          built[cat] = [];
+        }
+
+        built[cat].push({
+          id: row.PhraseID.trim(),
+          english: row.English.trim(),
+          khmer: (row.Khmer || '').trim(),
+          phonetic: (row.KhmerPhonetic || '').trim()
+        });
+
+      });
+
+      premiumPhrases = built;
+
+      console.log('PREMIUM CATEGORY KEYS:', Object.keys(premiumPhrases));
+
+      console.log(
+        'PREMIUM CATEGORY BREAKDOWN:',
+        Object.keys(premiumPhrases).map(function(k) {
+          return k + ':' + premiumPhrases[k].length;
+        })
+      );
+
+      console.log(
+        'PREMIUM TOTAL:',
+        Object.values(premiumPhrases).reduce(function(a,b) {
+          return a + b.length;
+        }, 0)
+      );
+
+      console.log('Premium loaded successfully');
+
     })
     .catch(function(err) {
       console.warn('Premium load failed:', err.message);
     });
 }
+
 function buildPhrasesFromCSV(rows) {
   var built = {};
   // Map all possible category names from the sheet
