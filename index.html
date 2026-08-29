@@ -528,10 +528,26 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
   </ul>
   <br>
 
-  <!-- BUTTON PLACEHOLDER -->
-  <a href="REPLACE_WITH_PARTNERS_LINK" target="_blank" style="background: #ffd500; color: #1a1a2e; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 1.05rem; display: inline-block; margin-top: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); letter-spacing: 0.2px;">
-    Unlock Lifetime Access ($4.99)
-  </a>
+ <!-- PREMIUM UNLOCK BUTTON -->
+<button
+  onclick="PremiumUI.showPaymentPrompt()"
+  style="
+    background:#ffd500;
+    color:#1a1a2e;
+    padding:14px 28px;
+    border:none;
+    border-radius:8px;
+    font-weight:bold;
+    font-size:1.05rem;
+    display:inline-block;
+    margin-top:6px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.08);
+    letter-spacing:0.2px;
+    cursor:pointer;
+  "
+>
+  Unlock Lifetime Access ($4.99)
+</button>
 
 </div>
 <!-- END: $4.99 Upgrade Box -->   
