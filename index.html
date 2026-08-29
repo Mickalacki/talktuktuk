@@ -1480,38 +1480,20 @@ function loadPremiumPhrases() {
 function buildPhrasesFromCSV(rows) {
   var built = {};
   // Map all possible category names from the sheet
- var catMap = {
-  'Greetings': 'greetings',
-  'greetings': 'greetings',
-
-  'Food & Drink': 'food',
-  'Food': 'food',
-  'food': 'food',
-
-  'Getting Around': 'transport',
-  'Transport': 'transport',
-  'transport': 'transport',
-
-  'Social': 'social',
-  'social': 'social',
-
-  'Numbers': 'numbers',
-  'numbers': 'numbers',
-
-  'Days': 'days',
-  'days': 'days',
-
-  'Colours': 'colours',
-  'Colors': 'colours',
-  'colours': 'colours',
-
-  'Fun Phrases': 'funphrases',
-  'fun phrases': 'funphrases',
-  'funphrases': 'funphrases',
-
+var catMap = {
   'Nightlife & Bar Survival': 'bar',
+  'Meeting People': 'meeting',
   'Shopping & Bargaining': 'shopping',
-  'Meeting People': 'meeting'
+  'Days & Time': 'days',
+  'Useful Extras': 'extras',
+  'Emergency & Health': 'emergency',
+  'Expressions & Slang': 'slang',
+  'Food & Drink Pro': 'foodpro',
+  'Weather & Nature': 'weather',
+  'People & Relationships': 'relationships',
+  'Linking words': 'linking',
+  'Exercise': 'exercise',
+  'Colours': 'colours'
 };
   rows.forEach(function(row) {
     if (!row.PhraseID || !row.English) return;
