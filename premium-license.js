@@ -1,212 +1,173 @@
 /**
- * PREMIUM LICENSE CONTROL SYSTEM
- * Master switch for enabling/disabling premium features
- * Everything flows from this single configuration
+ * TALK TUK TUK PREMIUM LICENSE SYSTEM
+ * Supabase-powered single Premium unlock
  */
 
-// ⭐ MASTER CONTROL - Change this to TRUE when ready to launch premium
-const PREMIUM_ENABLED = false;
-
 const PremiumLicense = {
-  
-  /**
-   * Check if premium features are enabled
-   */
+
+  price: '$4.99',
+
+  storageKey: 'ttt_premium_unlocked',
+
+  codeStorageKey: 'ttt_premium_code',
+
   isEnabled: function() {
-    return PREMIUM_ENABLED;
+    return true;
   },
 
-  /**
-   * Premium pack definitions
-   */
-  packs: {
-    survival: {
-      id: 'survival',
-      name: '🛡️ Survival Khmer Pack',
-      emoji: '🛡️',
-      price: '$4.99',
-      description: 'Essential phrases for emergencies, medical, transport & money',
-      features: [
-        'Help me / Emergency phrases',
-        'Hospital & medical terms',
-        'Transport directions',
-        'Money & pricing phrases',
-        'Time-related vocabulary'
-      ],
-      phraseCount: 10
-    },
-    bar_nightlife: {
-      id: 'bar_nightlife',
-      name: '🍺 Bar & Nightlife Pack',
-      emoji: '🍺',
-      price: '$4.99',
-      description: 'Fun social phrases, drinks, flirting & party vocabulary',
-      features: [
-        'Drink orders & cheers',
-        'Flirting phrases',
-        'Party & socializing',
-        'Nightlife vocabulary',
-        'Social engagement phrases'
-      ],
-      phraseCount: 10
-    },
-    bargaining: {
-      id: 'bargaining',
-      name: '💰 Bargaining Pack',
-      emoji: '💰',
-      price: '$4.99',
-      description: 'Master negotiation & pricing phrases for markets & shopping',
-      features: [
-        'Price negotiation',
-        'Discount requests',
-        'Fair pricing phrases',
-        'Market haggling',
-        'Deal-making language'
-      ],
-      phraseCount: 10
+  isUnlocked: function() {
+    return localStorage.getItem(this.storageKey) === 'true';
+  },
+
+  getStoredCode: function() {
+    return localStorage.getItem(this.codeStorageKey);
+  },
+
+  verifyCode: async function(accessCode) {
+
+    if (!accessCode) {
+      return {
+        success: false,
+        message: 'Please enter your access code.'
+      };
     }
-  },
 
-  /**
-   * Get pack info
-   */
-  getPack: function(packId) {
-    return this.packs[packId] || null;
-  },
+    const code = accessCode.trim();
 
-  /**
-   * Check if user has access to a pack
-   */
-  hasAccessToPack: function(packId) {
-    if (!this.isEnabled()) return true; // Free access when premium disabled
-    
-    const licenses = this.getLicenses();
-    return licenses.includes(packId);
-  },
+    try {
 
-  /**
-   * Get all user's purchased packs
-   */
-  getLicenses: function() {
-    if (!this.isEnabled()) return [];
-    
-    const stored = localStorage.getItem('ttt_premium_licenses');
-    return stored ? JSON.parse(stored) : [];
-  },
+      const { data, error } = await supabaseClient
+        .from('premium_access')
+        .select('access_code, premium')
+        .eq('access_code', code)
+        .eq('premium', true)
+        .maybeSingle();
 
-  /**
-   * Add license to user
-   */
-  addLicense: function(packId) {
-    if (!this.isEnabled()) return;
-    
-    const licenses = this.getLicenses();
-    if (!licenses.includes(packId)) {
-      licenses.push(packId);
-      localStorage.setItem('ttt_premium_licenses', JSON.stringify(licenses));
-      
-      // Dispatch event for UI updates
-      window.dispatchEvent(new CustomEvent('premiumUpdated', { 
-        detail: { packId, action: 'unlocked' } 
-      }));
-    }
-  },
+      if (error) {
 
-  /**
-   * Check if a phrase needs payment
-   */
-  needsPayment: function(phraseId) {
-    if (!this.isEnabled()) return null;
-    
-    const packId = this.getPhrasePackId(phraseId);
-    if (!packId) return null;
-    
-    if (!this.hasAccessToPack(packId)) {
-      return { packId, pack: this.getPack(packId) };
-    }
-    return null;
-  },
+        console.error('Supabase error:', error);
 
-  /**
-   * Find which pack owns a phrase
-   */
-  getPhrasePackId: function(phraseId) {
-    if (!PREMIUM_PHRASES) return null;
-    
-    for (const packId in PREMIUM_PHRASES) {
-      if (PREMIUM_PHRASES[packId].some(p => p.id === phraseId)) {
-        return packId;
+        return {
+          success: false,
+          message: 'Unable to check your access code. Please try again.'
+        };
       }
+
+      if (!data) {
+
+        return {
+          success: false,
+          message: 'Invalid access code.'
+        };
+      }
+
+      localStorage.setItem(this.storageKey, 'true');
+      localStorage.setItem(this.codeStorageKey, code);
+
+      window.dispatchEvent(
+        new CustomEvent('premiumUpdated', {
+          detail: {
+            action: 'unlocked',
+            accessCode: code
+          }
+        })
+      );
+
+      return {
+        success: true,
+        message: 'Premium unlocked successfully!'
+      };
+
+    } catch (err) {
+
+      console.error('Premium verification error:', err);
+
+      return {
+        success: false,
+        message: 'Something went wrong. Please try again.'
+      };
     }
-    return null;
   },
 
-  /**
-   * Simulate a payment (for testing)
-   * Replace with actual payment processor in production
-   */
-  simulatePayment: function(packId) {
-    console.log(`Simulating payment for: ${packId}`);
-    
-    // In production, this would:
-    // 1. Call Stripe/PayPal API
-    // 2. Process payment
-    // 3. Verify response
-    // 4. Send to backend
-    // 5. Add license on success
-    
-    // For testing, just add the license
-    this.addLicense(packId);
-    
-    const pack = this.getPack(packId);
-    alert(`✅ Purchase successful!\n\n${pack.name} is now unlocked!\n\nEnjoy all ${pack.phraseCount} phrases in this pack.`);
+  hasAccess: function() {
+    return this.isUnlocked();
   },
 
-  /**
-   * Restore purchases (for returning users)
-   * Checks backend for previously purchased packs
-   */
-  restorePurchases: function() {
-    if (!this.isEnabled()) return;
-    
-    console.log('🔄 Restoring purchases...');
-    
-    // In production, this would:
-    // 1. Get user ID / email
-    // 2. Query backend database
-    // 3. Retrieve purchased packs
-    // 4. Update localStorage
-    // 5. Notify user
-    
-    alert('Your purchases have been restored.');
+  hasAccessToPack: function(packId) {
+    return this.isUnlocked();
   },
 
-  /**
-   * Get all available packs (for display)
-   */
-  getAllPacks: function() {
-    return Object.values(this.packs);
-  },
+  needsPayment: function(phraseId) {
 
-  /**
-   * Get purchase status for UI
-   */
-  getPurchaseStatus: function() {
     if (!this.isEnabled()) {
-      return { enabled: false };
+      return null;
     }
-    
-    const licenses = this.getLicenses();
+
+    if (this.isUnlocked()) {
+      return null;
+    }
+
+    return {
+      premium: true,
+      phraseId: phraseId
+    };
+  },
+
+  addLicense: function() {
+
+    localStorage.setItem(this.storageKey, 'true');
+
+    window.dispatchEvent(
+      new CustomEvent('premiumUpdated', {
+        detail: {
+          action: 'unlocked'
+        }
+      })
+    );
+  },
+
+  restorePurchases: function() {
+
+    if (this.isUnlocked()) {
+
+      return {
+        success: true,
+        message: 'Premium is already unlocked on this device.'
+      };
+
+    }
+
+    return {
+      success: false,
+      message: 'Please enter your Premium access code.'
+    };
+  },
+
+  getPurchaseStatus: function() {
+
     return {
       enabled: true,
-      purchased: licenses,
-      total_packs: Object.keys(this.packs).length,
-      spent: licenses.length * 4.99 // Rough estimate
+      unlocked: this.isUnlocked(),
+      price: this.price
     };
+  },
+
+  clearAccess: function() {
+
+    localStorage.removeItem(this.storageKey);
+    localStorage.removeItem(this.codeStorageKey);
+
+    window.dispatchEvent(
+      new CustomEvent('premiumUpdated', {
+        detail: {
+          action: 'locked'
+        }
+      })
+    );
   }
+
 };
 
-// Export if using modules
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = PremiumLicense;
 }
