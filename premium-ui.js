@@ -1,43 +1,18 @@
 /**
- * PREMIUM UI SYSTEM
- * Manages premium pack display, purchase buttons, and access overlays
- * Controlled by PREMIUM_ENABLED flag in premium-license.js
+ * TALK TUK TUK PREMIUM UI
+ * Single $4.99 Premium unlock
+ * Access is verified through Supabase
  */
 
 const PremiumUI = {
-  /**
-   * Render premium pack card
-   */
-  renderPackCard: function(packId) {
-    if (!PremiumLicense.isEnabled()) return '';
-    
-    const pack = PremiumLicense.getPack(packId);
-    const hasAccess = PremiumLicense.hasAccessToPack(packId);
-    
-    return `
-      <div style="background:white;border-radius:14px;padding:18px;box-shadow:0 3px 16px rgba(0,0,0,0.12);display:flex;align-items:center;gap:14px;margin-bottom:10px;position:relative;">
-        <div style="font-size:32px;flex-shrink:0;">${pack.emoji}</div>
-        <div style="flex:1;">
-          <div style="font-family:Fredoka One,cursive;font-size:17px;color:#1a1a2e;margin-bottom:4px;">${pack.name}</div>
-          <div style="font-size:12px;color:#777;margin-bottom:8px;">${pack.description}</div>
-          ${hasAccess ? 
-            `<div style="font-size:12px;color:#4CAF50;font-weight:700;">✅ You have access</div>` :
-            `<div style="font-size:12px;color:#FF9800;font-weight:700;">🔒 ${pack.price}</div>`
-          }
-        </div>
-        ${!hasAccess ? 
-          `<button onclick="PremiumUI.showPaymentPrompt('${packId}')" style="background:linear-gradient(135deg,#FFD700,#FFA500);color:white;border:none;border-radius:20px;padding:8px 16px;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0;">Get Pack</button>` :
-          `<div style="background:#4CAF50;color:white;border-radius:20px;padding:8px 16px;font-size:11px;font-weight:700;">Unlocked</div>`
-        }
-      </div>
-    `;
-  },
 
   /**
-   * Show lock overlay for premium phrase
+   * Show Premium unlock screen
    */
-  showPremiumOverlay: function(phraseData, packInfo) {
+  showPaymentPrompt: function() {
+
     const overlay = document.createElement('div');
+
     overlay.style.cssText = `
       position: fixed;
       top: 0;
@@ -48,114 +23,449 @@ const PremiumUI = {
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 999;
+      z-index: 9999;
       padding: 20px;
     `;
-    
+
     const content = document.createElement('div');
+
     content.style.cssText = `
       background: white;
       border-radius: 20px;
-      padding: 30px;
+      padding: 28px;
       max-width: 400px;
+      width: 100%;
       text-align: center;
+      box-sizing: border-box;
     `;
-    
-    const pack = PremiumLicense.getPack(packInfo.packId);
-    
+
     content.innerHTML = `
-      <div style="font-size:56px;margin-bottom:16px;">${pack.emoji}</div>
-      <div style="font-family:Fredoka One,cursive;font-size:24px;color:#1a1a2e;margin-bottom:12px;">
-        ${pack.name}
+      <div style="font-size:52px;margin-bottom:10px;">⭐</div>
+
+      <div style="
+        font-family:Fredoka One,cursive;
+        font-size:26px;
+        color:#1565C0;
+        margin-bottom:10px;
+      ">
+        Talk Tuk Tuk Premium
       </div>
-      <div style="font-size:14px;color:#555;margin-bottom:20px;line-height:1.6;">
-        This phrase is part of our <strong>${pack.name}</strong>. Unlock it to access all ${pack.name} content.
+
+      <div style="
+        font-size:15px;
+        color:#555;
+        line-height:1.6;
+        margin-bottom:20px;
+      ">
+        Unlock all 160 Premium Khmer phrases
+        with a one-time payment of <strong>$4.99</strong>.
       </div>
-      <div style="background:#FFF8DC;padding:16px;border-radius:12px;margin-bottom:20px;text-align:left;">
-        <div style="font-weight:bold;font-size:13px;margin-bottom:10px;">📦 Package includes:</div>
-        <ul style="margin:0;padding-left:20px;font-size:12px;color:#555;line-height:1.8;">
-          ${pack.features.map(f => `<li>${f}</li>`).join('')}
-        </ul>
+
+      <div style="
+        background:#FFF8DC;
+        padding:15px;
+        border-radius:12px;
+        margin-bottom:20px;
+        font-size:13px;
+        color:#555;
+      ">
+        🔓 Lifetime access<br>
+        🚫 No subscription<br>
+        🚫 No advertisements
       </div>
-      <div style="display:flex;gap:10px;">
-        <button onclick="this.parentElement.parentElement.parentElement.remove()" style="flex:1;background:#eee;color:#1a1a2e;border:none;border-radius:30px;padding:14px;font-family:Fredoka One,cursive;font-size:16px;cursor:pointer;">Later</button>
-        <button onclick="PremiumUI.showPaymentPrompt('${packInfo.packId}')" style="flex:1;background:linear-gradient(135deg,#FFD700,#FFA500);color:white;border:none;border-radius:30px;padding:14px;font-family:Fredoka One,cursive;font-size:16px;font-weight:700;cursor:pointer;">Unlock ${pack.price}</button>
-      </div>
+
+      <button
+        onclick="PremiumUI.showAccessCodeBox()"
+        style="
+          width:100%;
+          background:linear-gradient(135deg,#FFD700,#FFA500);
+          color:white;
+          border:none;
+          border-radius:30px;
+          padding:14px;
+          font-family:Fredoka One,cursive;
+          font-size:17px;
+          font-weight:700;
+          cursor:pointer;
+          margin-bottom:10px;
+        "
+      >
+        🔑 I Have My Access Code
+      </button>
+
+      <button
+        onclick="this.parentElement.parentElement.remove()"
+        style="
+          width:100%;
+          background:#eee;
+          color:#333;
+          border:none;
+          border-radius:30px;
+          padding:12px;
+          font-size:14px;
+          cursor:pointer;
+        "
+      >
+        Later
+      </button>
     `;
-    
+
     overlay.appendChild(content);
-    overlay.onclick = (e) => {
-      if (e.target === overlay) overlay.remove();
+
+    overlay.onclick = function(e) {
+      if (e.target === overlay) {
+        overlay.remove();
+      }
     };
+
     document.body.appendChild(overlay);
   },
 
-  /**
-   * Show payment/purchase prompt
-   */
-  showPaymentPrompt: function(packId) {
-    alert(`🎉 Ready to unlock ${PremiumLicense.getPack(packId).name}!\n\nIn production, this would show payment options:\n• Stripe payment\n• PayPal\n• Apple Pay / Google Play\n\nFor now, click "OK" to simulate purchase.`);
-    
-    // Simulate payment
-    PremiumLicense.simulatePayment(packId);
-  },
 
   /**
-   * Render all premium packs section
+   * Show access code entry
+   */
+  showAccessCodeBox: function() {
+
+    const existing = document.querySelector('#ttt-premium-overlay');
+
+    if (existing) {
+      existing.remove();
+    }
+
+    const overlay = document.createElement('div');
+
+    overlay.id = 'ttt-premium-overlay';
+
+    overlay.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 20px;
+    `;
+
+    const content = document.createElement('div');
+
+    content.style.cssText = `
+      background:white;
+      border-radius:20px;
+      padding:28px;
+      max-width:400px;
+      width:100%;
+      text-align:center;
+      box-sizing:border-box;
+    `;
+
+    content.innerHTML = `
+      <div style="font-size:48px;margin-bottom:10px;">🔑</div>
+
+      <div style="
+        font-family:Fredoka One,cursive;
+        font-size:24px;
+        color:#1565C0;
+        margin-bottom:10px;
+      ">
+        Enter Your Access Code
+      </div>
+
+      <div style="
+        font-size:14px;
+        color:#666;
+        margin-bottom:18px;
+      ">
+        Enter the Premium access code you received after payment.
+      </div>
+
+      <input
+        id="ttt-premium-code"
+        type="text"
+        placeholder="Enter access code"
+        autocomplete="off"
+        style="
+          width:100%;
+          box-sizing:border-box;
+          padding:14px;
+          border:2px solid #ddd;
+          border-radius:12px;
+          font-size:16px;
+          text-align:center;
+          margin-bottom:12px;
+        "
+      >
+
+      <div
+        id="ttt-premium-message"
+        style="
+          min-height:22px;
+          font-size:13px;
+          margin-bottom:12px;
+        "
+      ></div>
+
+      <button
+        id="ttt-premium-verify"
+        onclick="PremiumUI.verifyAccessCode()"
+        style="
+          width:100%;
+          background:linear-gradient(135deg,#FFD700,#FFA500);
+          color:white;
+          border:none;
+          border-radius:30px;
+          padding:14px;
+          font-family:Fredoka One,cursive;
+          font-size:17px;
+          font-weight:700;
+          cursor:pointer;
+          margin-bottom:10px;
+        "
+      >
+        🔓 Unlock Premium
+      </button>
+
+      <button
+        onclick="this.parentElement.parentElement.remove()"
+        style="
+          width:100%;
+          background:#eee;
+          color:#333;
+          border:none;
+          border-radius:30px;
+          padding:12px;
+          font-size:14px;
+          cursor:pointer;
+        "
+      >
+        Cancel
+      </button>
+    `;
+
+    overlay.appendChild(content);
+
+    document.body.appendChild(overlay);
+
+    setTimeout(function() {
+      document.getElementById('ttt-premium-code').focus();
+    }, 100);
+  },
+
+
+  /**
+   * Verify the customer's access code
+   */
+  verifyAccessCode: async function() {
+
+    const input = document.getElementById('ttt-premium-code');
+    const message = document.getElementById('ttt-premium-message');
+    const button = document.getElementById('ttt-premium-verify');
+
+    if (!input || !message || !button) {
+      return;
+    }
+
+    const code = input.value.trim();
+
+    if (!code) {
+
+      message.textContent = 'Please enter your access code.';
+      message.style.color = '#d32f2f';
+
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = 'Checking...';
+
+    message.textContent = '';
+
+    const result = await PremiumLicense.verifyCode(code);
+
+    if (result.success) {
+
+      message.textContent = '✅ Premium unlocked successfully!';
+      message.style.color = '#2e7d32';
+
+      setTimeout(function() {
+        location.reload();
+      }, 1200);
+
+    } else {
+
+      message.textContent = '❌ ' + result.message;
+      message.style.color = '#d32f2f';
+
+      button.disabled = false;
+      button.textContent = '🔓 Unlock Premium';
+    }
+  },
+
+
+  /**
+   * Check whether Premium is required
+   */
+  checkPhraseAccess: function(phraseId) {
+
+    const payment = PremiumLicense.needsPayment(phraseId);
+
+    if (payment) {
+
+      this.showPaymentPrompt();
+
+      return false;
+    }
+
+    return true;
+  },
+
+
+  /**
+   * Render Premium section
    */
   renderPremiumSection: function() {
-    if (!PremiumLicense.isEnabled()) return '';
-    
+
+    if (!PremiumLicense.isEnabled()) {
+      return '';
+    }
+
+    if (PremiumLicense.isUnlocked()) {
+
+      return `
+        <div style="
+          margin:14px 12px 0;
+          background:white;
+          border-radius:16px;
+          padding:20px;
+          box-shadow:0 4px 24px rgba(0,0,0,0.35);
+          text-align:center;
+        ">
+          <div style="font-size:42px;">⭐</div>
+
+          <div style="
+            font-family:Fredoka One,cursive;
+            font-size:24px;
+            color:#2e7d32;
+            margin:8px 0;
+          ">
+            Premium Unlocked
+          </div>
+
+          <div style="
+            font-size:13px;
+            color:#555;
+          ">
+            You have access to all Premium phrases.
+          </div>
+        </div>
+      `;
+
+    }
+
     return `
-      <div style="margin:14px 12px 0;background:white;border-radius:16px;padding:20px;box-shadow:0 4px 24px rgba(0,0,0,0.35);">
-        <div style="text-align:center;margin-bottom:20px;">
-          <div style="font-size:48px;margin-bottom:10px;">⭐</div>
-          <div style="font-family:Fredoka One,cursive;font-size:28px;color:#1565C0;margin-bottom:8px;">Premium Packs</div>
-          <div style="font-size:14px;color:#555;line-height:1.6;">Unlock exclusive phrases to speak like a local!</div>
+      <div style="
+        margin:14px 12px 0;
+        background:white;
+        border-radius:16px;
+        padding:20px;
+        box-shadow:0 4px 24px rgba(0,0,0,0.35);
+        text-align:center;
+      ">
+
+        <div style="font-size:48px;margin-bottom:10px;">
+          ⭐
         </div>
-        
-        <div id="premium-packs-list" style="margin-bottom:20px;">
-          ${this.renderPackCard('survival')}
-          ${this.renderPackCard('bar_nightlife')}
-          ${this.renderPackCard('bargaining')}
+
+        <div style="
+          font-family:Fredoka One,cursive;
+          font-size:27px;
+          color:#1565C0;
+          margin-bottom:8px;
+        ">
+          Talk Tuk Tuk Premium
         </div>
-        
-        <div style="background:#E3F2FD;padding:14px;border-radius:12px;font-size:12px;color:#1565C0;text-align:center;font-weight:700;">
-          ℹ️ One-time purchase. Lifetime access. No subscriptions.
+
+        <div style="
+          font-size:14px;
+          color:#555;
+          line-height:1.6;
+          margin-bottom:15px;
+        ">
+          Unlock all 160 Premium Khmer phrases.
         </div>
+
+        <div style="
+          font-size:18px;
+          font-weight:700;
+          color:#1565C0;
+          margin-bottom:15px;
+        ">
+          One-time payment: $4.99
+        </div>
+
+        <button
+          onclick="PremiumUI.showPaymentPrompt()"
+          style="
+            width:100%;
+            background:linear-gradient(135deg,#FFD700,#FFA500);
+            color:white;
+            border:none;
+            border-radius:30px;
+            padding:14px;
+            font-family:Fredoka One,cursive;
+            font-size:17px;
+            font-weight:700;
+            cursor:pointer;
+          "
+        >
+          ⭐ Unlock Premium
+        </button>
+
+        <div style="
+          margin-top:12px;
+          font-size:11px;
+          color:#777;
+        ">
+          Lifetime access • No subscription • No ads
+        </div>
+
       </div>
     `;
   },
 
-  /**
-   * Check phrase access and show lock if needed
-   */
-  checkPhraseAccess: function(phraseId) {
-    const payment = PremiumLicense.needsPayment(phraseId);
-    if (payment) {
-      const phraseData = { id: phraseId }; // Would have full data in real app
-      this.showPremiumOverlay(phraseData, payment);
-      return false; // Don't allow access
-    }
-    return true; // Allow access
-  },
 
   /**
-   * Handle phrase unlock event
+   * Premium updated
    */
   onPremiumUpdated: function(event) {
+
     console.log('🎉 Premium updated!', event.detail);
-    // Reload phrase lists or update UI
+
     location.reload();
   }
 };
 
-// Listen for premium updates
+
+// Listen for Premium unlock
 if (typeof window !== 'undefined') {
-  window.addEventListener('premiumUpdated', (e) => PremiumUI.onPremiumUpdated(e));
+
+  window.addEventListener(
+    'premiumUpdated',
+    function(e) {
+      PremiumUI.onPremiumUpdated(e);
+    }
+  );
+
 }
+
 
 // Export if using modules
 if (typeof module !== 'undefined' && module.exports) {
+
   module.exports = PremiumUI;
+
 }
