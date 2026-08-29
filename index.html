@@ -1480,19 +1480,38 @@ function loadPremiumPhrases() {
 function buildPhrasesFromCSV(rows) {
   var built = {};
   // Map all possible category names from the sheet
-  var catMap = {
-   'Greetings': 'greetings', 'greetings': 'greetings',
-'Food & Drink': 'food', 'Food': 'food', 'food': 'food',
-'Getting Around': 'transport', 'Transport': 'transport', 'transport': 'transport',
-'Social': 'social', 'social': 'social',
-'Numbers': 'numbers', 'numbers': 'numbers',
-'Days': 'days', 'days': 'days',
+ var catMap = {
+  'Greetings': 'greetings',
+  'greetings': 'greetings',
 
-'Colours': 'colours', 'Colors': 'colours', 'colours': 'colours',
+  'Food & Drink': 'food',
+  'Food': 'food',
+  'food': 'food',
 
-'Fun Phrases': 'funphrases',
-'fun phrases': 'funphrases',
-'funphrases': 'funphrases'
+  'Getting Around': 'transport',
+  'Transport': 'transport',
+  'transport': 'transport',
+
+  'Social': 'social',
+  'social': 'social',
+
+  'Numbers': 'numbers',
+  'numbers': 'numbers',
+
+  'Days': 'days',
+  'days': 'days',
+
+  'Colours': 'colours',
+  'Colors': 'colours',
+  'colours': 'colours',
+
+  'Fun Phrases': 'funphrases',
+  'fun phrases': 'funphrases',
+  'funphrases': 'funphrases',
+
+  'Nightlife & Bar Survival': 'bar',
+  'Shopping & Bargaining': 'shopping',
+  'Meeting People': 'meeting'
 };
   rows.forEach(function(row) {
     if (!row.PhraseID || !row.English) return;
