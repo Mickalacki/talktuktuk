@@ -1321,10 +1321,13 @@ function closeCategory() {
   currentCategory = null;
 }
 
-function openPhrase(p) {
+async function openPhrase(p) {
   document.getElementById('phrases-list').style.display = 'none';
+
   var isEnglish = window.learningLang === 'english';
-  document.getElementById('phrase-player-title').textContent = isEnglish ? p.english : p.english;
+
+  document.getElementById('phrase-player-title').textContent = p.english;
+
   if (isEnglish) {
     document.getElementById('phrase-khmer').textContent = p.english;
     document.getElementById('phrase-khmer').style.color = '#1565C0';
@@ -1336,10 +1339,57 @@ function openPhrase(p) {
     document.getElementById('phrase-english').textContent = p.english;
     document.getElementById('phrase-phonetic').textContent = p.phonetic;
   }
+
   var video = document.getElementById('phrase-video');
-  document.getElementById('phrase-video-src').src = baseMediaURL + p.id + '.mp4';
+
+  if (p.id && p.id.indexOf('PRE-') === 0) {
+
+    try {
+
+      var response = await fetch(
+        SUPABASE_URL + '/functions/v1/bright-api',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            fileName: p.id + '.mp4'
+          })
+        }
+      );
+
+      var result = await response.json();
+
+      if (!response.ok || !result.success || !result.url) {
+        throw new Error(result.error || 'Premium video unavailable');
+      }
+
+      document.getElementById('phrase-video-src').src = result.url;
+
+    } catch (err) {
+
+      console.error('Premium video error:', err);
+
+      alert('Sorry, this Premium video could not be loaded.');
+
+      document.getElementById('phrases-list').style.display = 'block';
+
+      return;
+    }
+
+  } else {
+
+    document.getElementById('phrase-video-src').src =
+      baseMediaURL + p.id + '.mp4';
+  }
+
   video.load();
-  video.play();
+
+  video.play().catch(function(err) {
+    console.warn('Video autoplay blocked:', err);
+  });
+
   document.getElementById('phrase-player').style.display = 'block';
 }
 
