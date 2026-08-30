@@ -327,91 +327,578 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
   <!-- PHRASES -->
   <div class="panel visible" id="panel-phrases">
 
-    <!-- CATEGORY LIST -->
-    <div id="phrases-categories">
-      <div class="song-list">
-        <div class="song-item" onclick="openCategory('greetings')">
-          <div class="song-item-header">
-            <div class="song-badge badge-kids" style="background:#FFD600;font-size:22px;width:44px;height:44px;">👋</div>
-            <div>
-              <div class="song-info-title">Start &amp; Simple Talk</div><div style="font-size:11px;color:#888;margin-top:1px;">ការនិយាយសាមញ្ញៗ</div>
-              <div class="song-info-sub"><span id="cat-sub-greetings">7 phrases · Hello, Thank you, Sorry...</span></div>
+   <!-- PHRASES -->
+<div class="panel visible" id="panel-phrases">
+
+  <!-- FREE CATEGORY LIST -->
+  <div id="phrases-categories">
+
+    <div class="song-list">
+
+      <div class="song-item" onclick="openCategory('greetings')">
+        <div class="song-item-header">
+          <div class="song-badge badge-kids" style="background:#FFD600;font-size:22px;width:44px;height:44px;">👋</div>
+          <div>
+            <div class="song-info-title">Start &amp; Simple Talk</div>
+            <div style="font-size:11px;color:#888;margin-top:1px;">ការនិយាយសាមញ្ញៗ</div>
+            <div class="song-info-sub">
+              <span id="cat-sub-greetings">7 phrases · Hello, Thank you, Sorry...</span>
             </div>
-            <div class="song-arrow">▶</div>
           </div>
-        </div>
-        <div class="song-item" onclick="openCategory('food')">
-          <div class="song-item-header">
-            <div class="song-badge badge-kids" style="background:#FF8F00;font-size:22px;width:44px;height:44px;">🍜</div>
-            <div>
-              <div class="song-info-title">Food &amp; Drink</div><div style="font-size:11px;color:#888;margin-top:1px;">ម្ហូប និងភេសជ្ជៈ</div>
-              <div class="song-info-sub"><span id="cat-sub-food">9 phrases · Water, Beer, Delicious...</span></div>
-            </div>
-            <div class="song-arrow">▶</div>
-          </div>
-        </div>
-        <div class="song-item" onclick="openCategory('transport')">
-          <div class="song-item-header">
-            <div class="song-badge badge-kids" style="background:#1565C0;font-size:22px;width:44px;height:44px;">🛺</div>
-            <div>
-              <div class="song-info-title">Getting Around</div><div style="font-size:11px;color:#888;margin-top:1px;">ការធ្វើដំណើរ</div>
-              <div class="song-info-sub"><span id="cat-sub-transport">6 phrases · Turn left, Stop here...</span></div>
-            </div>
-            <div class="song-arrow">▶</div>
-          </div>
-        </div>
-        <div class="song-item" onclick="openCategory('social')">
-          <div class="song-item-header">
-            <div class="song-badge badge-kids" style="background:#2E7D32;font-size:22px;width:44px;height:44px;">🤝</div>
-            <div>
-              <div class="song-info-title">Social</div><div style="font-size:11px;color:#888;margin-top:1px;">សង្គម</div>
-              <div class="song-info-sub"><span id="cat-sub-social">5 phrases · What is your name...</span></div>
-            </div>
-            <div class="song-arrow">▶</div>
-          </div>
-        </div>
-        <div class="song-item" onclick="openCategory('numbers')">
-          <div class="song-item-header">
-            <div class="song-badge badge-kids" style="background:#6A1B9A;font-size:22px;width:44px;height:44px;">🔢</div>
-            <div>
-              <div class="song-info-title">Numbers</div><div style="font-size:11px;color:#888;margin-top:1px;">លេខ</div>
-              <div class="song-info-sub"><span id="cat-sub-numbers">10 phrases · 1 through 10</span></div>
-            </div>
-            <div class="song-arrow">▶</div>
-          </div>
-        </div>
-        <div class="song-item" onclick="openCategory('days')">
-          <div class="song-item-header">
-            <div class="song-badge badge-kids" style="background:#00838F;font-size:22px;width:44px;height:44px;">📅</div>
-            <div>
-              <div class="song-info-title">Days</div><div style="font-size:11px;color:#888;margin-top:1px;">ថ្ងៃក្នុងសប្តាហ៍</div>
-              <div class="song-info-sub"><span id="cat-sub-days">8 phrases · Monday to Sunday</span></div>
-            </div>
-            <div class="song-arrow">▶</div>
-          </div>
-        </div>
-        <div class="song-item" onclick="openCategory('funphrases')">
-          <div class="song-item-header">
-            <div class="song-badge badge-kids" style="background:#AD1457;font-size:22px;width:44px;height:44px;">😄</div>
-            <div>
-              <div class="song-info-title">Fun Phrases</div><div style="font-size:11px;color:#888;margin-top:1px;">ពណ៌</div>
-              <div class="song-info-sub"><span id="cat-sub-colours">10 phrases · Just joking, Wait a little, You're funny...</span></div>
-            </div>
-            <div class="song-arrow">▶</div>
-          </div>
-        </div>
-        <div class="song-item" onclick="openKidsSongs()" style="display:none;">
-          <div class="song-item-header">
-            <div class="song-badge badge-kids" style="background:#4CAF50;font-size:22px;width:44px;height:44px;">👶</div>
-            <div>
-              <div class="song-info-title">Kids Songs</div><div style="font-size:11px;color:#888;margin-top:1px;">ចំរៀងកុមារ</div>
-              <div class="song-info-sub">2 songs · Sing along in Khmer</div>
-            </div>
-            <div class="song-arrow">▶</div>
-          </div>
+          <div class="song-arrow">▶</div>
         </div>
       </div>
+
+      <div class="song-item" onclick="openCategory('food')">
+        <div class="song-item-header">
+          <div class="song-badge badge-kids" style="background:#FF8F00;font-size:22px;width:44px;height:44px;">🍜</div>
+          <div>
+            <div class="song-info-title">Food &amp; Drink</div>
+            <div style="font-size:11px;color:#888;margin-top:1px;">ម្ហូប និងភេសជ្ជៈ</div>
+            <div class="song-info-sub">
+              <span id="cat-sub-food">9 phrases · Water, Beer, Delicious...</span>
+            </div>
+          </div>
+          <div class="song-arrow">▶</div>
+        </div>
+      </div>
+
+      <div class="song-item" onclick="openCategory('transport')">
+        <div class="song-item-header">
+          <div class="song-badge badge-kids" style="background:#1565C0;font-size:22px;width:44px;height:44px;">🛺</div>
+          <div>
+            <div class="song-info-title">Getting Around</div>
+            <div style="font-size:11px;color:#888;margin-top:1px;">ការធ្វើដំណើរ</div>
+            <div class="song-info-sub">
+              <span id="cat-sub-transport">6 phrases · Turn left, Stop here...</span>
+            </div>
+          </div>
+          <div class="song-arrow">▶</div>
+        </div>
+      </div>
+
+      <div class="song-item" onclick="openCategory('social')">
+        <div class="song-item-header">
+          <div class="song-badge badge-kids" style="background:#2E7D32;font-size:22px;width:44px;height:44px;">🤝</div>
+          <div>
+            <div class="song-info-title">Social</div>
+            <div style="font-size:11px;color:#888;margin-top:1px;">សង្គម</div>
+            <div class="song-info-sub">
+              <span id="cat-sub-social">5 phrases · What is your name...</span>
+            </div>
+          </div>
+          <div class="song-arrow">▶</div>
+        </div>
+      </div>
+
+      <div class="song-item" onclick="openCategory('numbers')">
+        <div class="song-item-header">
+          <div class="song-badge badge-kids" style="background:#6A1B9A;font-size:22px;width:44px;height:44px;">🔢</div>
+          <div>
+            <div class="song-info-title">Numbers</div>
+            <div style="font-size:11px;color:#888;margin-top:1px;">លេខ</div>
+            <div class="song-info-sub">
+              <span id="cat-sub-numbers">10 phrases · 1 through 10</span>
+            </div>
+          </div>
+          <div class="song-arrow">▶</div>
+        </div>
+      </div>
+
+      <div class="song-item" onclick="openCategory('days')">
+        <div class="song-item-header">
+          <div class="song-badge badge-kids" style="background:#00838F;font-size:22px;width:44px;height:44px;">📅</div>
+          <div>
+            <div class="song-info-title">Days</div>
+            <div style="font-size:11px;color:#888;margin-top:1px;">ថ្ងៃក្នុងសប្តាហ៍</div>
+            <div class="song-info-sub">
+              <span id="cat-sub-days">8 phrases · Monday to Sunday</span>
+            </div>
+          </div>
+          <div class="song-arrow">▶</div>
+        </div>
+      </div>
+
+      <div class="song-item" onclick="openCategory('funphrases')">
+        <div class="song-item-header">
+          <div class="song-badge badge-kids" style="background:#AD1457;font-size:22px;width:44px;height:44px;">😄</div>
+          <div>
+            <div class="song-info-title">Fun Phrases</div>
+            <div style="font-size:11px;color:#888;margin-top:1px;">សប្បាយៗ</div>
+            <div class="song-info-sub">
+              <span id="cat-sub-funphrases">10 phrases · Just joking, Wait a little, You're funny...</span>
+            </div>
+          </div>
+          <div class="song-arrow">▶</div>
+        </div>
+      </div>
+
     </div>
+
+    <!-- PREMIUM AREA -->
+    <div id="premium-area" style="margin-top:18px;">
+
+      <div style="
+        margin:0 12px;
+        background:white;
+        border-radius:18px;
+        padding:20px;
+        box-shadow:0 4px 24px rgba(0,0,0,0.35);
+        text-align:center;
+      ">
+
+        <div style="font-size:46px;">⭐</div>
+
+        <div style="
+          font-family:'Fredoka One',cursive;
+          font-size:27px;
+          color:#1565C0;
+          margin:6px 0 8px;
+        ">
+          Talk Tuk Tuk Premium
+        </div>
+
+        <div style="
+          font-size:14px;
+          color:#555;
+          line-height:1.5;
+          margin-bottom:14px;
+        ">
+          Unlock all 160 Premium Khmer phrases
+        </div>
+
+        <div style="
+          font-size:18px;
+          font-weight:700;
+          color:#1565C0;
+          margin-bottom:14px;
+        ">
+          One-time payment: $4.99
+        </div>
+
+        <button
+          onclick="handlePremiumButton()"
+          style="
+            width:100%;
+            background:linear-gradient(135deg,#FFD700,#FFA500);
+            color:white;
+            border:none;
+            border-radius:30px;
+            padding:14px;
+            font-family:'Fredoka One',cursive;
+            font-size:17px;
+            font-weight:700;
+            cursor:pointer;
+          "
+        >
+          ⭐ Unlock Premium
+        </button>
+
+        <div style="
+          margin-top:11px;
+          font-size:11px;
+          color:#777;
+        ">
+          Lifetime access • No subscription • No ads
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- PREMIUM CATEGORY LIST -->
+  <div id="premium-categories" style="display:none;">
+
+    <div style="margin:12px;">
+      <button
+        onclick="closePremiumCategories()"
+        style="
+          background:rgba(255,255,255,0.15);
+          color:white;
+          border:none;
+          border-radius:20px;
+          padding:8px 16px;
+          font-size:13px;
+          font-weight:700;
+          cursor:pointer;
+        "
+      >
+        ← Back
+      </button>
+
+      <div style="
+        font-family:'Fredoka One',cursive;
+        font-size:20px;
+        color:white;
+        margin-top:10px;
+      ">
+        ⭐ Premium Khmer
+      </div>
+    </div>
+
+    <div class="song-list" id="premium-category-list"></div>
+
+  </div>
+
+
+  <!-- PHRASE LIST -->
+  <div id="phrases-list" style="display:none;">
+    <div class="song-list" id="phrase-cards"></div>
+  </div>
+
+
+  <!-- PHRASE PLAYER -->
+  <div id="phrase-player" style="display:none;">
+
+    <div style="
+      margin:12px 12px 0;
+      background:white;
+      border-radius:16px;
+      overflow:hidden;
+      box-shadow:0 4px 24px rgba(0,0,0,0.35);
+    ">
+
+      <div
+        class="player-header kids"
+        style="display:flex;align-items:center;gap:8px;padding:12px 16px;"
+      >
+        <button class="player-back" onclick="closePhrasePlayer()">
+          ← Back
+        </button>
+
+        <div>
+          <div class="player-title" id="phrase-player-title"></div>
+        </div>
+      </div>
+
+      <video
+        id="phrase-video"
+        controls
+        playsinline
+        style="width:100%;display:block;background:#000;"
+        preload="auto"
+      >
+        <source
+          id="phrase-video-src"
+          src=""
+          type="video/mp4"
+        >
+      </video>
+
+      <div style="padding:16px 18px 20px;">
+
+        <div
+          style="
+            font-family:'Fredoka One',cursive;
+            font-size:28px;
+            color:#1565C0;
+            margin-bottom:6px;
+          "
+          id="phrase-khmer"
+        ></div>
+
+        <div
+          style="
+            font-size:16px;
+            font-weight:700;
+            color:#1a1a2e;
+            margin-bottom:4px;
+          "
+          id="phrase-english"
+        ></div>
+
+        <div
+          style="
+            font-size:13px;
+            color:#555;
+            font-style:italic;
+          "
+          id="phrase-phonetic"
+        ></div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+function handlePremiumButton() {
+
+  if (PremiumLicense.isUnlocked()) {
+    openPremiumCategories();
+  } else {
+    PremiumUI.showPaymentPrompt();
+  }
+
+}
+
+
+function openPremiumCategories() {
+
+  if (!PremiumLicense.isUnlocked()) {
+    PremiumUI.showPaymentPrompt();
+    return;
+  }
+
+  document.getElementById('phrases-categories').style.display = 'none';
+  document.getElementById('phrases-list').style.display = 'none';
+  document.getElementById('phrase-player').style.display = 'none';
+  document.getElementById('premium-categories').style.display = 'block';
+
+  var list = document.getElementById('premium-category-list');
+
+  list.innerHTML = '';
+
+  var labels = {
+    bar: '🍻 Nightlife & Bar Survival',
+    meeting: '🤝 Meeting People',
+    shopping: '🛍️ Shopping & Bargaining',
+    days: '📅 Days & Time',
+    extras: '🔧 Useful Extras',
+    emergency: '🚑 Emergency & Health',
+    slang: '😎 Expressions & Slang',
+    foodpro: '🍜 Food & Drink Pro',
+    weather: '🌦️ Weather & Nature',
+    relationships: '❤️ People & Relationships',
+    linking: '🔗 Linking Words',
+    exercise: '🏃 Exercise',
+    colours: '🎨 Colours'
+  };
+
+  var icons = {
+    bar:'🍻',
+    meeting:'🤝',
+    shopping:'🛍️',
+    days:'📅',
+    extras:'🔧',
+    emergency:'🚑',
+    slang:'😎',
+    foodpro:'🍜',
+    weather:'🌦️',
+    relationships:'❤️',
+    linking:'🔗',
+    exercise:'🏃',
+    colours:'🎨'
+  };
+
+  Object.keys(labels).forEach(function(cat) {
+
+    if (!premiumPhrases[cat] || !premiumPhrases[cat].length) {
+      return;
+    }
+
+    var div = document.createElement('div');
+
+    div.className = 'song-item';
+
+    div.innerHTML = `
+      <div class="song-item-header">
+
+        <div
+          class="song-badge"
+          style="
+            background:#1565C0;
+            font-size:22px;
+            width:44px;
+            height:44px;
+            border-radius:50%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+          "
+        >
+          ${icons[cat]}
+        </div>
+
+        <div>
+
+          <div class="song-info-title">
+            ${labels[cat]}
+          </div>
+
+          <div class="song-info-sub">
+            ${premiumPhrases[cat].length} Premium phrases
+          </div>
+
+        </div>
+
+        <div class="song-arrow">
+          ▶
+        </div>
+
+      </div>
+    `;
+
+    div.onclick = function() {
+      openPremiumCategory(cat);
+    };
+
+    list.appendChild(div);
+
+  });
+
+}
+
+
+function closePremiumCategories() {
+
+  document.getElementById('premium-categories').style.display = 'none';
+  document.getElementById('phrases-list').style.display = 'none';
+  document.getElementById('phrase-player').style.display = 'none';
+  document.getElementById('phrases-categories').style.display = 'block';
+
+}
+
+
+function openPremiumCategory(cat) {
+
+  if (!PremiumLicense.isUnlocked()) {
+    PremiumUI.showPaymentPrompt();
+    return;
+  }
+
+  document.getElementById('premium-categories').style.display = 'none';
+  document.getElementById('phrase-player').style.display = 'none';
+
+  var phrasesList = document.getElementById('phrases-list');
+
+  phrasesList.innerHTML = '';
+
+  var back = document.createElement('div');
+
+  back.style.cssText = 'margin:12px 12px 4px;';
+
+  back.innerHTML = `
+    <button
+      class="player-back"
+      style="
+        background:rgba(255,255,255,0.15);
+        color:white;
+        border:none;
+        border-radius:20px;
+        padding:8px 16px;
+        font-size:13px;
+        font-weight:700;
+        cursor:pointer;
+      "
+      onclick="openPremiumCategories()"
+    >
+      ← Premium
+    </button>
+
+    <div
+      style="
+        font-family:'Fredoka One',cursive;
+        font-size:18px;
+        color:white;
+        margin-top:8px;
+        padding-left:4px;
+      "
+    >
+      ${catLabelsPremium(cat)}
+    </div>
+  `;
+
+  phrasesList.appendChild(back);
+
+  var list = document.createElement('div');
+
+  list.className = 'song-list';
+
+  premiumPhrases[cat].forEach(function(p) {
+
+    var div = document.createElement('div');
+
+    div.className = 'song-item';
+
+    var khmerText = p.khmer
+      ? '<div style="font-size:12px;color:var(--muted);margin-top:2px;font-family:Khmer,sans-serif;">' + p.khmer + '</div>'
+      : '';
+
+    div.innerHTML = `
+      <div class="song-item-header">
+
+        <div
+          class="song-badge"
+          style="
+            background:#1565C0;
+            font-size:20px;
+            width:38px;
+            height:38px;
+            border-radius:50%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+          "
+        >
+          ⭐
+        </div>
+
+        <div>
+
+          <div class="song-info-title">
+            ${p.english}
+          </div>
+
+          ${khmerText}
+
+        </div>
+
+        <div class="song-arrow">
+          ▶
+        </div>
+
+      </div>
+    `;
+
+    div.onclick = function() {
+
+      openPhrase(p);
+
+    };
+
+    list.appendChild(div);
+
+  });
+
+  phrasesList.appendChild(list);
+
+  phrasesList.style.display = 'block';
+
+}
+
+
+function catLabelsPremium(cat) {
+
+  var labels = {
+    bar: '🍻 Nightlife & Bar Survival',
+    meeting: '🤝 Meeting People',
+    shopping: '🛍️ Shopping & Bargaining',
+    days: '📅 Days & Time',
+    extras: '🔧 Useful Extras',
+    emergency: '🚑 Emergency & Health',
+    slang: '😎 Expressions & Slang',
+    foodpro: '🍜 Food & Drink Pro',
+    weather: '🌦️ Weather & Nature',
+    relationships: '❤️ People & Relationships',
+    linking: '🔗 Linking Words',
+    exercise: '🏃 Exercise',
+    colours: '🎨 Colours'
+  };
+
+  return labels[cat] || cat;
+
+}
+
+</script>
 
     <!-- PHRASE LIST (shown when category selected) -->
     <div id="phrases-list" style="display:none;">
