@@ -758,7 +758,26 @@ function closePremiumCategories() {
   document.getElementById('phrases-categories').style.display = 'block';
 
 }
+function getPremiumIcon(cat) {
+  var premiumIcons = {
+    bar: '🍻',
+    meeting: '🤝',
+    shopping: '🛍️',
+    days: '📅',
+    extras: '🔧',
+    emergency: '🚑',
+    slang: '😎',
+    foodpro: '🍜',
+    weather: '🌦️',
+    relationships: '❤️',
+    linking: '🔗',
+    exercise: '🏃',
+    colours: '🎨',
+    pool: '🎱'
+  };
 
+  return premiumIcons[cat] || '⭐';
+}
 
 function openPremiumCategory(cat) {
 
@@ -841,7 +860,7 @@ function openPremiumCategory(cat) {
             justify-content:center;
           "
         >
-        ⭐
+        ${getPremiumIcon(cat)}
         </div>
 
         <div>
