@@ -1873,7 +1873,7 @@ async function openPhrase(p) {
         throw new Error(result.error || 'Premium video unavailable');
       }
 
-      document.getElementById('phrase-video-src').src = result.url;
+     document.getElementById('phrase-video-src').src = result.url + '&v=' + Date.now();
 
     } catch (err) {
 
