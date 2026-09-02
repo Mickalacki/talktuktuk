@@ -1849,7 +1849,7 @@ async function openPhrase(p) {
   }
 
   var video = document.getElementById('phrase-video');
-console.log("PHRASE ID:", p.id);
+
 if (p.id && (p.id.indexOf('PRE-') === 0 || p.id.indexOf('PHR-') === 0)) {
 
     try {
@@ -1869,7 +1869,6 @@ if (p.id && (p.id.indexOf('PRE-') === 0 || p.id.indexOf('PHR-') === 0)) {
 
       var result = await response.json();
 
-      console.log("VIDEO URL:", result.url);
 
       if (!response.ok || !result.success || !result.url) {
         throw new Error(result.error || 'Premium video unavailable');
