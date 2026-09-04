@@ -1893,13 +1893,13 @@ if (p.id && (p.id.indexOf('PRE-') === 0 || p.id.indexOf('PHR-') === 0)) {
       baseMediaURL + p.id + '.mp4';
   }
 
-  video.load();
+ document.getElementById('phrase-player').style.display = 'block';
 
-  video.play().catch(function(err) {
-    console.warn('Video autoplay blocked:', err);
-  });
+video.load();
 
-  document.getElementById('phrase-player').style.display = 'block';
+video.play().catch(function(err) {
+  console.warn('Video autoplay blocked:', err);
+});
 }
 
 function closePhrasePlayer() {
