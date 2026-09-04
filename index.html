@@ -1850,7 +1850,7 @@ async function openPhrase(p) {
 
   var video = document.getElementById('phrase-video');
 
-if (p.id && (p.id.indexOf('PRE-') === 0 || p.id.indexOf('PHR-') === 0)) {
+if (p.id && isPremiumPhrase(p.id)) {
 
     try {
 
