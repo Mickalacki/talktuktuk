@@ -2127,6 +2127,7 @@ var catMap = {
 };
   rows.forEach(function(row) {
     if (!row.PhraseID || !row.English) return;
+    if (row.PhraseID.trim().startsWith('PRE-')) return;
     var rawCat = (row.Category || '').trim();
     var cat = catMap[rawCat];
     if (!cat) return;
