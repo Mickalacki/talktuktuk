@@ -2396,5 +2396,15 @@ function restartQuiz() {
 
 <!-- PREMIUM UI -->
 <script src="premium-ui.js"></script>
+  <script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js')
+      .then(() => console.log('Talk Tuk Tuk service worker registered'))
+      .catch(error => console.log('Service worker registration failed:', error));
+  });
+}
+</script>
+
 </body>
 </html>
