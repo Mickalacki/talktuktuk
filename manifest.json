@@ -1,0 +1,22 @@
+{
+  "name": "Talk Tuk Tuk",
+  "short_name": "Talk Tuk Tuk",
+  "description": "Learn useful Khmer phrases for everyday life in Cambodia",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#f4c542",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
